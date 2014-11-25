@@ -1,0 +1,8 @@
+{
+    "id" : "ItemRendering",
+    "version" : "0.1.0",
+    "author" : "Josharias",
+    "displayName" : "ItemRendering",
+    "description" : "",
+    "dependencies" : []
+}
