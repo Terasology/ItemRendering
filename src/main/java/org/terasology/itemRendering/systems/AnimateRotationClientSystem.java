@@ -29,6 +29,11 @@ import org.terasology.registry.In;
 
 import javax.vecmath.Quat4f;
 
+/**
+ * Continuously rotates all entities in a location with an AnimateRotationComponent.
+ * <p/>
+ * Using synchronization will allow all rotated objects at the same speed to always be in the same rotation as each other.
+ */
 @RegisterSystem(RegisterMode.CLIENT)
 public class AnimateRotationClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
 
@@ -36,15 +41,6 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
     Time time;
     @In
     EntityManager entityManager;
-
-    @Override
-    public void initialise() {
-    }
-
-    @Override
-    public void shutdown() {
-
-    }
 
     @Override
     public void update(float delta) {

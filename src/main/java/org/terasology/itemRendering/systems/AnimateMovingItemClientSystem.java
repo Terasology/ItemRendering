@@ -29,32 +29,20 @@ import org.terasology.itemRendering.components.AnimatedMovingItemComponent;
 import org.terasology.itemRendering.components.RenderItemComponent;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.registry.In;
-import org.terasology.utilities.random.FastRandom;
-import org.terasology.utilities.random.Random;
 
 import javax.vecmath.Vector3f;
 
+/**
+ * This will take any entity in a location with AnimatedMovingItemComponent and RenderItemComponent and move it between the entry and exit sides in the block space for a location.
+ * These entities will move from start towards the center, then from the center to the exit.
+ */
 @RegisterSystem(RegisterMode.CLIENT)
 public class AnimateMovingItemClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
-    //static final long UPDATE_INTERVAL = 10;
 
     @In
     Time time;
     @In
     EntityManager entityManager;
-
-    Random rand;
-    long nextUpdateTime;
-
-    @Override
-    public void initialise() {
-        rand = new FastRandom();
-    }
-
-    @Override
-    public void shutdown() {
-
-    }
 
     @Override
     public void update(float delta) {

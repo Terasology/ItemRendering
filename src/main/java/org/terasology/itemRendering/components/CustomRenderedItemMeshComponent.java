@@ -19,6 +19,9 @@ import org.terasology.entitySystem.Component;
 import org.terasology.rendering.assets.material.Material;
 import org.terasology.rendering.assets.mesh.Mesh;
 
+/**
+ * Add this to an entity that already has RenderItemComponent to use this mesh and material for rendering instead of the default block or item mesh.
+ */
 public class CustomRenderedItemMeshComponent implements Component {
     public Mesh mesh;
     public Material material;

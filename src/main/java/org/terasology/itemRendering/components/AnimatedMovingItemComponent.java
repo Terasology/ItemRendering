@@ -19,6 +19,9 @@ import org.terasology.entitySystem.Component;
 import org.terasology.math.Side;
 import org.terasology.network.Replicate;
 
+/**
+ * Add this to an entity that will move between the entrance side of a block to the exit side of a block, passing through the center of the block
+ */
 public class AnimatedMovingItemComponent implements Component {
     @Replicate
     public Side entranceSide;

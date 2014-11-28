@@ -42,6 +42,11 @@ import org.terasology.world.block.items.BlockItemComponent;
 
 import javax.vecmath.Vector3f;
 
+/**
+ * This will add a location and mesh to an entity in the world for any entities that get a RenderItemComponent, causing them to be rendered in the world.
+ * <p/>
+ * The location is a relative location based on the entity's owner.
+ */
 @RegisterSystem(RegisterMode.CLIENT)
 public class RenderItemClientSystem extends BaseComponentSystem {
 

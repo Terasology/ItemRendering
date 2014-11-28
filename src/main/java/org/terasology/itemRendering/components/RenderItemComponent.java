@@ -23,7 +23,7 @@ import org.terasology.math.Yaw;
 import javax.vecmath.Vector3f;
 
 /**
- * Add this to a block that will display an item and it will be copied to each item that is displayed
+ * Add this to an entity that will be rendered in the world.  It will attach its location to its owner entity's location.
  */
 public class RenderItemComponent implements Component {
     public Vector3f translate = new Vector3f(0, 0, 0);

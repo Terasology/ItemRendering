@@ -20,6 +20,9 @@ import org.terasology.math.Pitch;
 import org.terasology.math.Roll;
 import org.terasology.math.Yaw;
 
+/**
+ * Add this to an entity that will continuously rotate.
+ */
 public class AnimateRotationComponent implements Component {
     public Yaw yaw = Yaw.NONE;
     public Pitch pitch = Pitch.NONE;
