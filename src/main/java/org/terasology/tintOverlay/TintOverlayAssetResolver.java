@@ -138,7 +138,12 @@ public class TintOverlayAssetResolver implements AssetResolver<Texture, TextureD
             return null;
         } else {
             final ByteBuffer byteBuffer = TextureUtil.convertToByteBuffer(resultImage);
-            return factory.buildAsset(uri, new TextureData(resultImage.getWidth(), resultImage.getHeight(), new ByteBuffer[]{byteBuffer}, Texture.WrapMode.REPEAT, Texture.FilterMode.NEAREST));
+            return factory.buildAsset(uri, new TextureData(
+                    resultImage.getWidth(),
+                    resultImage.getHeight(),
+                    new ByteBuffer[]{byteBuffer},
+                    Texture.WrapMode.REPEAT,
+                    Texture.FilterMode.NEAREST));
         }
     }
 

@@ -62,13 +62,13 @@ public class TintOverlayIconComponent implements Component {
         /**
          * positive values shift right, negative values shift left
          */
-        public int shiftX = 0;
+        public int shiftX;
         /**
          * positive values shift down, negative values shift up
          */
-        public int shiftY = 0;
+        public int shiftY;
 
-        public boolean invisible = false;
+        public boolean invisible;
 
         public TintParameter(Integer hue, float brightnessScale, float saturationScale, int shiftX, int shiftY) {
             this.hue = hue;
