@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 MovingBlocks
+ * Copyright 2015 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@ import org.terasology.entitySystem.Component;
 import org.terasology.math.Pitch;
 import org.terasology.math.Roll;
 import org.terasology.math.Yaw;
-
-import javax.vecmath.Vector3f;
+import org.terasology.math.geom.Vector3f;
 
 /**
  * Add this to an entity that will be rendered in the world.  It will attach its location to its owner entity's location.

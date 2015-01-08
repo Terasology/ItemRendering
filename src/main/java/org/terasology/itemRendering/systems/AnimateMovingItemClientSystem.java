@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 MovingBlocks
+ * Copyright 2015 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,12 +28,12 @@ import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimatedMovingItemComponent;
 import org.terasology.itemRendering.components.RenderItemComponent;
 import org.terasology.logic.location.LocationComponent;
+import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 
-import javax.vecmath.Vector3f;
-
 /**
- * This will take any entity in a location with AnimatedMovingItemComponent and RenderItemComponent and move it between the entry and exit sides in the block space for a location.
+ * This will take any entity in a location with AnimatedMovingItemComponent and RenderItemComponent
+ * and move it between the entry and exit sides in the block space for a location.
  * These entities will move from start towards the center, then from the center to the exit.
  */
 @RegisterSystem(RegisterMode.CLIENT)

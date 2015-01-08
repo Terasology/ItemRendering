@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 MovingBlocks
+ * Copyright 2015 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,8 @@ import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimateRotationComponent;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.math.Rotation;
+import org.terasology.math.geom.Quat4f;
 import org.terasology.registry.In;
-
-import javax.vecmath.Quat4f;
 
 /**
  * Continuously rotates all entities in a location with an AnimateRotationComponent.
@@ -54,14 +53,16 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
                 Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
                 Quat4f rotationDirection = rotation.getQuat4f();
                 Quat4f rotationAmount = new Quat4f(0, 0, 0, 1f);
-                rotationAmount.interpolate(rotationDirection, percentThroughRotation);
+                // TODO: Commented out for compile fix. Needs tweak after we moved from vecmath to TeraMath
+                //rotationAmount.interpolate(rotationDirection, percentThroughRotation);
 
                 locationComponent.setLocalRotation(rotationAmount);
             } else {
                 Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
                 Quat4f rotationDirection = rotation.getQuat4f();
                 Quat4f rotationAmount = new Quat4f(0, 0, 0, 1f);
-                rotationAmount.interpolate(rotationDirection, delta * animateRotationComponent.speed);
+                // TODO: Commented out for compile fix. Needs tweak after we moved from vecmath to TeraMath
+                //rotationAmount.interpolate(rotationDirection, delta * animateRotationComponent.speed);
 
                 Quat4f currentRotation = locationComponent.getLocalRotation();
                 currentRotation.mul(rotationAmount);
