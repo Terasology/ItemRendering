@@ -25,6 +25,7 @@ import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimateRotationComponent;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.math.Rotation;
+import org.terasology.math.geom.BaseQuat4f;
 import org.terasology.math.geom.Quat4f;
 import org.terasology.registry.In;
 
@@ -52,17 +53,15 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
 
                 Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
                 Quat4f rotationDirection = rotation.getQuat4f();
-                Quat4f rotationAmount = new Quat4f(0, 0, 0, 1f);
-                // TODO: Commented out for compile fix. Needs tweak after we moved from vecmath to TeraMath
-                //rotationAmount.interpolate(rotationDirection, percentThroughRotation);
+                Quat4f zero = new Quat4f(0, 0, 0, 1f);
+                Quat4f rotationAmount = BaseQuat4f.interpolate(zero, rotationDirection, percentThroughRotation);
 
                 locationComponent.setLocalRotation(rotationAmount);
             } else {
                 Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
                 Quat4f rotationDirection = rotation.getQuat4f();
-                Quat4f rotationAmount = new Quat4f(0, 0, 0, 1f);
-                // TODO: Commented out for compile fix. Needs tweak after we moved from vecmath to TeraMath
-                //rotationAmount.interpolate(rotationDirection, delta * animateRotationComponent.speed);
+                Quat4f zero = new Quat4f(0, 0, 0, 1f);
+                Quat4f rotationAmount = BaseQuat4f.interpolate(zero, rotationDirection, delta * animateRotationComponent.speed);
 
                 Quat4f currentRotation = locationComponent.getLocalRotation();
                 currentRotation.mul(rotationAmount);
