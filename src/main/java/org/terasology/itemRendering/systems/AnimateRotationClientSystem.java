@@ -49,14 +49,13 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
             LocationComponent locationComponent = entity.getComponent(LocationComponent.class);
 
             if (animateRotationComponent.isSynchronized) {
-                float percentThroughRotation = (time.getGameTime() % (1 / animateRotationComponent.speed)) / (1 / animateRotationComponent.speed);
+                float percentThroughRotation = (time.getGameTime() % (1 / animateRotationComponent.speed * 4)) / (1 / animateRotationComponent.speed * 4);
 
                 Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
-                Quat4f rotationDirection = rotation.getQuat4f();
-                Quat4f zero = new Quat4f(0, 0, 0, 1f);
-                Quat4f rotationAmount = BaseQuat4f.interpolate(zero, rotationDirection, percentThroughRotation);
+                // assumes only 90 degree rotations
+                Quat4f rotationDirection = new Quat4f(rotation.getQuat4f().getAxis(), rotation.getQuat4f().getAngle() * 4f * percentThroughRotation);
 
-                locationComponent.setLocalRotation(rotationAmount);
+                locationComponent.setLocalRotation(rotationDirection);
             } else {
                 Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
                 Quat4f rotationDirection = rotation.getQuat4f();
