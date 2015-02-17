@@ -27,7 +27,7 @@ When the entity gets a RenderItemComponent added, it will rotate continuously.
 ```java
 {
     "AnimateRotation" : {
-        "yaw|pitch|roll" : "value"
+        "yawSpeed|pitchSpeed|rollSpeed" : <float value in rotations per second>
     }
 }
 ```
@@ -37,10 +37,9 @@ When the entity gets a RenderItemComponent added, it will rotate continuously.
 ```java
 {
     "AnimateRotation" : {
-        "yaw" : "NONE",
-        "pitch" : "NONE",
-        "roll" : "NONE",
-        "speed" : 1,
+        "yawSpeed" : "0",
+        "pitchSpeed" : "0",
+        "rollSpeed" : "0",
         "isSynchronized" : "false"
     }
 }

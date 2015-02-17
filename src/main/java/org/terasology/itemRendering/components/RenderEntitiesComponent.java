@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 MovingBlocks
+ * Copyright 2015 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,19 @@
  */
 package org.terasology.itemRendering.components;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.terasology.entitySystem.Component;
+import org.terasology.entitySystem.Owns;
+import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.itemRendering.systems.RenderOwnedEntityDetails;
 
-/**
- * Add this to an entity that will continuously rotate.  Speed is in rotations per second.
- */
-public class AnimateRotationComponent implements Component {
-    public float yawSpeed = 0f;
-    public float pitchSpeed = 0f;
-    public float rollSpeed = 0f;
-    public boolean isSynchronized;
+import java.util.List;
+import java.util.Map;
+
+public class RenderEntitiesComponent extends RenderOwnedEntityDetails implements Component {
+    public Map<String, RenderOwnedEntityDetails> entities = Maps.newHashMap();
+
+    @Owns
+    public List<EntityRef> ownedEntities = Lists.newArrayList();
 }

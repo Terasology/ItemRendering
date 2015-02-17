@@ -24,8 +24,6 @@ import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimateRotationComponent;
 import org.terasology.logic.location.LocationComponent;
-import org.terasology.math.Rotation;
-import org.terasology.math.geom.BaseQuat4f;
 import org.terasology.math.geom.Quat4f;
 import org.terasology.registry.In;
 
@@ -36,6 +34,7 @@ import org.terasology.registry.In;
  */
 @RegisterSystem(RegisterMode.CLIENT)
 public class AnimateRotationClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
+    static final float RADIAN_VALUE = 2f * (float) Math.PI;
 
     @In
     Time time;
@@ -49,19 +48,13 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
             LocationComponent locationComponent = entity.getComponent(LocationComponent.class);
 
             if (animateRotationComponent.isSynchronized) {
-                float percentThroughRotation = (time.getGameTime() % (1 / animateRotationComponent.speed * 4)) / (1 / animateRotationComponent.speed * 4);
-
-                Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
-                // assumes only 90 degree rotations
-                Quat4f rotationDirection = new Quat4f(rotation.getQuat4f().getAxis(), rotation.getQuat4f().getAngle() * 4f * percentThroughRotation);
-
+                float yaw = animateRotationComponent.yawSpeed != 0 ? ((time.getGameTime() / animateRotationComponent.yawSpeed) % 1f) * RADIAN_VALUE : 0;
+                float pitch = animateRotationComponent.pitchSpeed != 0 ? ((time.getGameTime() / animateRotationComponent.pitchSpeed) % 1f) * RADIAN_VALUE : 0;
+                float roll = animateRotationComponent.rollSpeed != 0 ? ((time.getGameTime() / animateRotationComponent.rollSpeed) % 1f) * RADIAN_VALUE : 0;
+                Quat4f rotationDirection = new Quat4f(yaw, pitch, roll);
                 locationComponent.setLocalRotation(rotationDirection);
             } else {
-                Rotation rotation = Rotation.rotate(animateRotationComponent.yaw, animateRotationComponent.pitch, animateRotationComponent.roll);
-                Quat4f rotationDirection = rotation.getQuat4f();
-                Quat4f zero = new Quat4f(0, 0, 0, 1f);
-                Quat4f rotationAmount = BaseQuat4f.interpolate(zero, rotationDirection, delta * animateRotationComponent.speed);
-
+                Quat4f rotationAmount = new Quat4f(animateRotationComponent.yawSpeed * delta * RADIAN_VALUE, animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE, animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
                 Quat4f currentRotation = locationComponent.getLocalRotation();
                 currentRotation.mul(rotationAmount);
                 currentRotation.normalize();
