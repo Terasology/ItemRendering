@@ -18,7 +18,7 @@ package org.terasology.itemRendering.systems;
 import org.terasology.asset.Assets;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
-import org.terasology.entitySystem.entity.lifecycleEvents.OnAddedComponent;
+import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
 import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
@@ -38,6 +38,7 @@ import org.terasology.rendering.logic.MeshComponent;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.WorldProvider;
+import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.family.BlockFamily;
 import org.terasology.world.block.items.BlockItemComponent;
 
@@ -70,13 +71,24 @@ public class RenderItemClientSystem extends BaseComponentSystem {
     private void updateLocation(EntityRef entity, RenderItemComponent itemDisplay, LocationComponent location) {
         location.setLocalScale(itemDisplay.size);
         Rotation rotation = Rotation.rotate(itemDisplay.yaw, itemDisplay.pitch, itemDisplay.roll);
-        entity.saveComponent(location);
+        if (entity.hasComponent(LocationComponent.class)) {
+            entity.saveComponent(location);
+        } else {
+            entity.addComponent(location);
+        }
         Location.attachChild(entity.getOwner(), entity, itemDisplay.translate, rotation.getQuat4f());
     }
 
     @ReceiveEvent
-    public void onAddedItemDisplay(OnAddedComponent event, EntityRef entity, RenderItemComponent itemDisplay) {
+    public void onAddedItemDisplay(OnActivatedComponent event, EntityRef entity, RenderItemComponent itemDisplay) {
         LocationComponent locationComponent = entity.getOwner().getComponent(LocationComponent.class);
+
+        if (locationComponent == null && entity.getOwner().hasComponent(BlockComponent.class)) {
+            // sometimes blocks lose their location component
+            BlockComponent blockComponent = entity.getOwner().getComponent(BlockComponent.class);
+            locationComponent = new LocationComponent(blockComponent.getPosition().toVector3f());
+            entity.getOwner().addComponent(locationComponent);
+        }
 
         if (locationComponent != null) {
             if (!entity.hasComponent(MeshComponent.class)) {

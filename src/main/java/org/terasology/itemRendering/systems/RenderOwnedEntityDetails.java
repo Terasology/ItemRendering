@@ -30,4 +30,13 @@ public class RenderOwnedEntityDetails {
     public boolean itemsAreFlat;
     public boolean verticalAlignmentBottom;
     public boolean rotateWithBlock;
+
+    public void setRenderDetails(RenderOwnedEntityDetails other) {
+        translate = other.translate;
+        blockSize = other.blockSize;
+        itemSize = other.itemSize;
+        itemsAreFlat = other.itemsAreFlat;
+        verticalAlignmentBottom = other.verticalAlignmentBottom;
+        rotateWithBlock = other.rotateWithBlock;
+    }
 }

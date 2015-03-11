@@ -53,24 +53,26 @@ public class RenderSlotsClientSystem extends RenderOwnedEntityClientSystemBase {
     }
 
     private void refreshRenderedItems(EntityRef inventoryEntity) {
-        RenderInventorySlotsComponent renderInventoryInCategory = inventoryEntity.getComponent(RenderInventorySlotsComponent.class);
+        RenderInventorySlotsComponent renderInventorySlotsComponent = inventoryEntity.getComponent(RenderInventorySlotsComponent.class);
 
         List<Integer> slots = Lists.newArrayList();
-        if (renderInventoryInCategory != null) {
-            slots = renderInventoryInCategory.slots;
+        if (renderInventorySlotsComponent != null) {
+            slots = renderInventorySlotsComponent.slots;
         }
 
         // ensure all non rendered inventory slots have been reset
         for (int slot = 0; slot < inventoryManager.getNumSlots(inventoryEntity); slot++) {
             EntityRef item = inventoryManager.getItemInSlot(inventoryEntity, slot);
-            if (!slots.contains(slot)) {
+            if (!slots.contains(slot) && item.exists()) {
                 removeRenderingComponents(item);
             }
         }
 
         for (int slot : slots) {
             EntityRef item = inventoryManager.getItemInSlot(inventoryEntity, slot);
-            addRenderingComponents(inventoryEntity, item, renderInventoryInCategory);
+            if (item.exists()) {
+                addRenderingComponents(inventoryEntity, item, renderInventorySlotsComponent);
+            }
         }
     }
 }

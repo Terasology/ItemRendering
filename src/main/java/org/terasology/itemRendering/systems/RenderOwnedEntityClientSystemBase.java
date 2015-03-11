@@ -19,7 +19,6 @@ import org.terasology.RotationUtils;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.itemRendering.components.RenderItemComponent;
-import org.terasology.logic.location.LocationComponent;
 import org.terasology.math.Pitch;
 import org.terasology.math.Rotation;
 import org.terasology.math.Side;
@@ -27,6 +26,7 @@ import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
+import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.items.BlockItemComponent;
 
 public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSystem {
@@ -77,10 +77,10 @@ public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSys
         }
 
         if (renderOwnedEntityDetails.rotateWithBlock) {
-            LocationComponent parentLocationComponent = owningEntity.getComponent(LocationComponent.class);
+            BlockComponent blockComponent = owningEntity.getComponent(BlockComponent.class);
             WorldProvider worldProvider = CoreRegistry.get(WorldProvider.class);
-            if (worldProvider.isBlockRelevant(parentLocationComponent.getWorldPosition())) {
-                Block block = worldProvider.getBlock(parentLocationComponent.getWorldPosition());
+            if (blockComponent != null) {
+                Block block = blockComponent.getBlock();
                 Side direction = block.getDirection();
                 Rotation blockRotation = RotationUtils.getRotation(direction);
                 renderItem.yaw = blockRotation.getYaw();
