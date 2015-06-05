@@ -118,7 +118,7 @@ public class RenderItemClientSystem extends BaseComponentSystem {
         ItemComponent itemComponent = entityRef.getComponent(ItemComponent.class);
         if (itemComponent != null) {
             MeshComponent meshComponent = new MeshComponent();
-            meshComponent.material = Assets.getMaterial("engine:droppedItem");
+            meshComponent.material = Assets.getMaterial("engine:droppedItem").get();
             if (itemComponent.icon != null) {
                 meshComponent.mesh = IconMeshFactory.getIconMesh(itemComponent.icon);
             }
@@ -136,7 +136,7 @@ public class RenderItemClientSystem extends BaseComponentSystem {
         }
 
         mesh.mesh = blockFamily.getArchetypeBlock().getMesh();
-        mesh.material = Assets.getMaterial("engine:terrain");
+        mesh.material = Assets.getMaterial("engine:terrain").get();
 
         if (blockFamily.getArchetypeBlock().getLuminance() > 0 && !entityRef.hasComponent(LightComponent.class)) {
             LightComponent lightComponent = entityRef.addComponent(new LightComponent());

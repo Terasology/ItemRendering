@@ -1,0 +1,171 @@
+/*
+ * Copyright 2014 MovingBlocks
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.terasology.tintOverlay;
+
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.terasology.asset.Assets;
+import org.terasology.assets.AssetDataProducer;
+import org.terasology.assets.ResourceUrn;
+import org.terasology.assets.module.annotations.RegisterAssetDataProducer;
+import org.terasology.naming.Name;
+import org.terasology.rendering.assets.texture.Texture;
+import org.terasology.rendering.assets.texture.TextureData;
+import org.terasology.rendering.assets.texture.TextureRegionAsset;
+import org.terasology.rendering.assets.texture.TextureUtil;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
+/**
+ * Layers images on top of each other. Tinting, brightning, saturating, and shifting.
+ * Uses a goofy uri syntax to carry all the parameters.
+ */
+@RegisterAssetDataProducer
+public class TintOverlayTextureProducer implements AssetDataProducer<TextureData> {
+    private static final Name MODULENAME = new Name("ItemRendering");
+    private static final Name TINTOVERLAY_RESOURCE_NAME = new Name("tintOverlayTexture");
+    private static final Logger logger = LoggerFactory.getLogger(TintOverlayTextureProducer.class);
+
+    /**
+     * @return texturefunction.tintoverlay=tintparameters1>basetextureuri1,tintparameters2>basetextureuri2
+     */
+    public static String getTintOverlayUri(Map<String, TintOverlayIconComponent.TintParameter> hueTextures) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(MODULENAME + ":" + TINTOVERLAY_RESOURCE_NAME + "#");
+
+        List<String> parameters = Lists.newArrayList();
+        for (Map.Entry<String, TintOverlayIconComponent.TintParameter> entry : hueTextures.entrySet()) {
+            if (!entry.getValue().invisible) {
+                parameters.add(entry.getValue().toDelimitedString() + ">" + entry.getKey());
+            }
+        }
+        sb.append(escape(Joiner.on(",").join(parameters)));
+        return sb.toString();
+
+    }
+
+    static String escape(String text) {
+        return text.replace("#", "%23");
+    }
+
+    static String unEscape(String text) {
+        return text.replace("%23", "#");
+    }
+
+    @Override
+    public Set<ResourceUrn> getAvailableAssetUrns() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public Set<Name> getModulesProviding(Name resourceName) {
+        if (TINTOVERLAY_RESOURCE_NAME.equals(resourceName)) {
+            return ImmutableSet.of(MODULENAME);
+        }
+        return Collections.emptySet();
+    }
+
+    @Override
+    public ResourceUrn redirect(ResourceUrn urn) {
+        return urn;
+    }
+
+    @Override
+    public Optional<TextureData> getAssetData(ResourceUrn urn) throws IOException {
+        if (MODULENAME.equals(urn.getModuleName()) && TINTOVERLAY_RESOURCE_NAME.equals(urn.getResourceName())) {
+            Name fragmentName = urn.getFragmentName();
+            if (!fragmentName.isEmpty()) {
+
+                String[] parameterValues = unEscape(fragmentName.toString()).split(",");
+
+                BufferedImage resultImage = null;
+                for (String hueTexture : parameterValues) {
+
+                    String[] hueTextureSplit = hueTexture.split(">", 2);
+                    String textureResourceUri = hueTextureSplit[1];
+                    TintOverlayIconComponent.TintParameter tintParameter = new TintOverlayIconComponent.TintParameter(hueTextureSplit[0]);
+
+                    Optional<TextureRegionAsset> resourceTextureRegion = Assets.getTextureRegion(textureResourceUri);
+                    if (!resourceTextureRegion.isPresent()) {
+                        logger.error("Texture: " + textureResourceUri + " not found");
+                        continue;
+                    }
+                    BufferedImage resourceImage = TextureUtil.convertToImage(resourceTextureRegion.get());
+                    if (resultImage == null) {
+                        resultImage = new BufferedImage(resourceImage.getHeight(), resourceImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
+                    }
+
+                    if (resultImage.getHeight() != resourceImage.getHeight()) {
+                        logger.error("Heights are not the same for " + textureResourceUri + ". Skipping this texture");
+                        continue;
+                    }
+
+                    float[] hsv = new float[3];
+                    for (int y = 0; y < resultImage.getHeight(); y++) {
+                        for (int x = 0; x < resultImage.getWidth(); x++) {
+                            int targetX = x + tintParameter.shiftX;
+                            int targetY = y + tintParameter.shiftY;
+                            if (validCoord(targetX, resultImage.getWidth())
+                                    && validCoord(targetY, resultImage.getHeight())) {
+                                int argb = resourceImage.getRGB(x, y);
+                                int a = (argb >> 24) & 0xFF;
+                                if (a > 0) {
+                                    if (tintParameter.hue == null) {
+                                        // we are not hueing
+                                        resultImage.setRGB(targetX, targetY, argb);
+                                    } else {
+                                        Color.RGBtoHSB((argb >> 16) & 0xFF, (argb >> 8) & 0xFF, argb & 0xFF, hsv);
+
+                                        int resultRgb = Color.HSBtoRGB(tintParameter.getScaledHue(), hsv[1] * tintParameter.saturationScale, hsv[2] * tintParameter.brightnessScale);
+                                        int resultArgb = (a << 24) | (resultRgb & 0x00FFFFFF);
+                                        resultImage.setRGB(targetX, targetY, resultArgb);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (resultImage != null) {
+                    final ByteBuffer byteBuffer = TextureUtil.convertToByteBuffer(resultImage);
+                    return Optional.of(new TextureData(
+                            resultImage.getWidth(),
+                            resultImage.getHeight(),
+                            new ByteBuffer[]{byteBuffer},
+                            Texture.WrapMode.REPEAT,
+                            Texture.FilterMode.NEAREST));
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    private boolean validCoord(int coord, int maxCoord) {
+        return coord >= 0 && coord <= maxCoord;
+    }
+}

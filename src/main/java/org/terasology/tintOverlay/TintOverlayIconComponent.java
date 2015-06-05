@@ -16,14 +16,16 @@
 package org.terasology.tintOverlay;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import org.terasology.asset.AssetType;
-import org.terasology.asset.AssetUri;
 import org.terasology.asset.Assets;
+import org.terasology.assets.ResourceUrn;
 import org.terasology.entitySystem.Component;
 import org.terasology.reflection.MappedContainer;
+import org.terasology.rendering.assets.texture.Texture;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A map of a texture and its tint parameters (although at this point it does more than just tint).
@@ -33,9 +35,9 @@ public class TintOverlayIconComponent implements Component {
 
     public TintParameter getTintParameterForIcon(String iconUri) {
         for (Map.Entry<String, TintParameter> overlayItem : texture.entrySet()) {
-            AssetUri toolItemIcon = Assets.resolveAssetUri(AssetType.SUBTEXTURE, overlayItem.getKey());
-            AssetUri inputItemIcon = Assets.resolveAssetUri(AssetType.SUBTEXTURE, iconUri);
-            if (toolItemIcon.equals(inputItemIcon)) {
+            Set<ResourceUrn> toolItemIcon = Assets.resolveAssetUri(overlayItem.getKey(), Texture.class);
+            Set<ResourceUrn> inputItemIcon = Assets.resolveAssetUri(iconUri, Texture.class);
+            if (Iterables.getFirst(toolItemIcon, null).equals(Iterables.getFirst(inputItemIcon, null))) {
                 return overlayItem.getValue();
             }
         }
