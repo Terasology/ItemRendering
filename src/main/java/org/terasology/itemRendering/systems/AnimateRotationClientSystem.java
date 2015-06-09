@@ -43,14 +43,15 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
 
     @Override
     public void update(float delta) {
+        float gameTime = time.getGameTime();
         for (EntityRef entity : entityManager.getEntitiesWith(AnimateRotationComponent.class, LocationComponent.class)) {
             AnimateRotationComponent animateRotationComponent = entity.getComponent(AnimateRotationComponent.class);
             LocationComponent locationComponent = entity.getComponent(LocationComponent.class);
 
             if (animateRotationComponent.isSynchronized) {
-                float yaw = animateRotationComponent.yawSpeed != 0 ? ((time.getGameTime() / animateRotationComponent.yawSpeed) % 1f) * RADIAN_VALUE : 0;
-                float pitch = animateRotationComponent.pitchSpeed != 0 ? ((time.getGameTime() / animateRotationComponent.pitchSpeed) % 1f) * RADIAN_VALUE : 0;
-                float roll = animateRotationComponent.rollSpeed != 0 ? ((time.getGameTime() / animateRotationComponent.rollSpeed) % 1f) * RADIAN_VALUE : 0;
+                float yaw = animateRotationComponent.yawSpeed != 0 ? ((gameTime / animateRotationComponent.yawSpeed) % 1f) * RADIAN_VALUE : 0;
+                float pitch = animateRotationComponent.pitchSpeed != 0 ? ((gameTime / animateRotationComponent.pitchSpeed) % 1f) * RADIAN_VALUE : 0;
+                float roll = animateRotationComponent.rollSpeed != 0 ? ((gameTime / animateRotationComponent.rollSpeed) % 1f) * RADIAN_VALUE : 0;
                 Quat4f rotationDirection = new Quat4f(yaw, pitch, roll);
                 locationComponent.setLocalRotation(rotationDirection);
             } else {
