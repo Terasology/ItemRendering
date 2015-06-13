@@ -27,6 +27,8 @@ import org.terasology.registry.CoreRegistry;
 import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockComponent;
+import org.terasology.world.block.family.BlockFamily;
+import org.terasology.world.block.family.SideDefinedBlockFamily;
 import org.terasology.world.block.items.BlockItemComponent;
 
 public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSystem {
@@ -80,8 +82,7 @@ public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSys
             BlockComponent blockComponent = owningEntity.getComponent(BlockComponent.class);
             WorldProvider worldProvider = CoreRegistry.get(WorldProvider.class);
             if (blockComponent != null) {
-                Block block = blockComponent.getBlock();
-                Side direction = block.getDirection();
+                Side direction = getSideDefinedDirection(blockComponent.getBlock());
                 Rotation blockRotation = RotationUtils.getRotation(direction);
                 renderItem.yaw = blockRotation.getYaw();
                 renderItem.pitch = blockRotation.getPitch();
@@ -92,5 +93,14 @@ public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSys
         }
 
         return renderItem;
+    }
+
+    public Side getSideDefinedDirection(Block block) {
+        Side blockDirection = Side.FRONT;
+        BlockFamily blockFamily = block.getBlockFamily();
+        if (blockFamily instanceof SideDefinedBlockFamily) {
+            blockDirection = ((SideDefinedBlockFamily) blockFamily).getSide(block);
+        }
+        return blockDirection;
     }
 }
