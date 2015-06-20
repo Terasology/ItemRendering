@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 MovingBlocks
+ * Copyright 2015 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,35 +18,30 @@ package org.terasology.tintOverlay;
 import org.terasology.asset.Assets;
 import org.terasology.assets.AssetDataProducer;
 import org.terasology.assets.ResourceUrn;
-import org.terasology.assets.module.annotations.RegisterAssetDataProducer;
-import org.terasology.rendering.assets.texture.Texture;
-import org.terasology.rendering.assets.texture.TextureData;
 import org.terasology.rendering.assets.texture.TextureRegionAsset;
 import org.terasology.rendering.assets.texture.TextureUtil;
+import org.terasology.world.block.tiles.BlockTile;
+import org.terasology.world.block.tiles.TileData;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Optional;
 
 /**
  * Layers images on top of each other. Tinting, brightning, saturating, and shifting.
  * Uses a goofy uri syntax to carry all the parameters.
+ * <p>
+ * Warning: this does not yet work because: TileData does not yet have @API, runtime generated TileData assets do not
+ * get added to the blocktile texture.
  */
-@RegisterAssetDataProducer
-public class TintOverlayTextureProducer extends BaseTintOverlayProducer implements AssetDataProducer<TextureData> {
+//@RegisterAssetDataProducer
+public class TintOverlayBlockTileProducer extends BaseTintOverlayProducer implements AssetDataProducer<TileData> {
 
     @Override
-    public Optional<TextureData> getAssetData(ResourceUrn urn) throws IOException {
+    public Optional<TileData> getAssetData(ResourceUrn urn) throws IOException {
         BufferedImage resultImage = createImage(urn);
         if (resultImage != null) {
-            final ByteBuffer byteBuffer = TextureUtil.convertToByteBuffer(resultImage);
-            return Optional.of(new TextureData(
-                    resultImage.getWidth(),
-                    resultImage.getHeight(),
-                    new ByteBuffer[]{byteBuffer},
-                    Texture.WrapMode.REPEAT,
-                    Texture.FilterMode.NEAREST));
+            return Optional.of(new TileData(resultImage, false));
         }
 
         return Optional.empty();
@@ -54,10 +49,18 @@ public class TintOverlayTextureProducer extends BaseTintOverlayProducer implemen
 
     @Override
     protected BufferedImage getResourceImage(String resourceUri) {
-        Optional<TextureRegionAsset> resourceTextureRegion = Assets.getTextureRegion(resourceUri);
-        if (!resourceTextureRegion.isPresent()) {
-            return null;
+        // attempt to get an existing block tile
+        Optional<BlockTile> resourceBlockTile = Assets.get(resourceUri, BlockTile.class);
+        if (resourceBlockTile.isPresent()) {
+            return resourceBlockTile.get().getImage();
         }
-        return TextureUtil.convertToImage(resourceTextureRegion.get());
+
+        // try and get it as a normal texture
+        Optional<TextureRegionAsset> resourceTextureRegion = Assets.getTextureRegion(resourceUri);
+        if (resourceTextureRegion.isPresent()) {
+            return TextureUtil.convertToImage(resourceTextureRegion.get());
+        }
+
+        return null;
     }
 }
