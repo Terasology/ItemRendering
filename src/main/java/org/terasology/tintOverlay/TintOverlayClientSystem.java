@@ -21,13 +21,14 @@ import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
 import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
+import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.inventory.ItemComponent;
 
 /**
  * Overrides the default icon on an item with a runtime generated icon.
  */
-@RegisterSystem
+@RegisterSystem(RegisterMode.CLIENT)
 public class TintOverlayClientSystem extends BaseComponentSystem {
     @ReceiveEvent
     public void overlayIconAdded(OnActivatedComponent event, EntityRef entity, TintOverlayIconComponent overlayIcon, ItemComponent itemComponent) {
