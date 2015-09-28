@@ -20,7 +20,7 @@ When the entity gets an RenderItemComponent added, it will use this mesh and mat
 
 #AnimateRotationComponent
 
-When the entity gets a RenderItemComponent added, it will rotate continuously.
+When the entity gets a AnimateRotationComponent added, it will rotate continuously.
 
 ##Minimal Usage on a prefab
 
@@ -44,3 +44,20 @@ When the entity gets a RenderItemComponent added, it will rotate continuously.
     }
 }
 ```
+
+#AnimateBounceComponent
+
+When the entity gets a AnimateBounceComponent added, it will bounce continuously.
+
+##Minimal Usage on a prefab
+
+```json
+{
+    "AnimateBounce": {
+        "maxHeight" : 10.0,
+        "period" : 10.0
+    }
+}
+```
+
+A combination of AnimateBounceComponent and AnimateRotationComponent can be [watched on YouTube](https://www.youtube.com/watch?v=HhyODzw36bA).
