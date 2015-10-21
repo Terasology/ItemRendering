@@ -19,9 +19,9 @@ package org.terasology.itemRendering.components;
 import org.terasology.entitySystem.Component;
 
 /**
- * Add this to an entity and it will bounce up and down. Requires a LocationComponent to work.
+ * Add this to an entity and it will wobble up and down. Requires a LocationComponent to work.
  */
-public class AnimateBounceComponent implements Component {
+public class AnimateWobbleComponent implements Component {
 
     /**
      * The period length of one bounce in game time.
@@ -31,5 +31,5 @@ public class AnimateBounceComponent implements Component {
     /**
      * The max. height of a bounce in blocks.
      */
-    public float maxHeight = 1f;
+    public float maxHeight = 10f;
 }
