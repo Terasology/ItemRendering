@@ -15,63 +15,29 @@
  */
 package org.terasology.itemRendering.systems;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.terasology.engine.Time;
-import org.terasology.entitySystem.entity.EntityManager;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimateBounceComponent;
-import org.terasology.logic.location.LocationComponent;
-import org.terasology.registry.In;
 
 /**
- * Continuously animates all entities an {@link AnimateBounceComponent}.
+ * Continuously animates all entities with an {@link AnimateBounceComponent}.
  */
 @RegisterSystem(RegisterMode.CLIENT)
-public class AnimateBounceClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
+public class AnimateBounceClientSystem extends AnimatedOffsetSystem<AnimateBounceComponent> {
 
-    private final Map<EntityRef, Float> offsets = new HashMap<>();
-
-    private static final Float ZERO = Float.valueOf(0);
-
-    @In
-    private Time time;
-
-    @In
-    private EntityManager entityManager;
-
-    @Override
-    public void update(float delta) {
-        float gameTime = time.getGameTime();
-        for (EntityRef entity : entityManager.getEntitiesWith(AnimateBounceComponent.class, LocationComponent.class)) {
-
-            AnimateBounceComponent bounceComp= entity.getComponent(AnimateBounceComponent.class);
-            LocationComponent locComp= entity.getComponent(LocationComponent.class);
-
-            float prevOff = offsets.getOrDefault(entity, ZERO);
-            float newOff = computeOffset(bounceComp, gameTime);
-            float y = locComp.getLocalPosition().getY();
-
-            locComp.getLocalPosition().setY(y - prevOff + newOff);
-
-            offsets.put(entity, newOff);
-            entity.saveComponent(locComp);
-        }
+    public AnimateBounceClientSystem() {
+        super(AnimateBounceComponent.class);
     }
 
-    private float computeOffset(AnimateBounceComponent bounceComp, float gameTime) {
+    @Override
+    protected float computeOffset(AnimateBounceComponent bounceComp, float gameTime) {
         float modTime = gameTime / bounceComp.period;
-        float dt = modTime % 1f; // dt moves from 0 to 0.5 and back
+        float dt = modTime % 1f;    // dt goes from 0 to 1
         if (dt > 0.5f) {
-            dt = 1f - dt;
+            dt = 1f - dt;           // dt now goes from 0 to 0.5 and back
         }
-        // squaring is position is equivalent to constant (downward) acceleration
-        float relPos = dt * dt;  // relPos is between 0 and 0.25
+        // squaring its position is equivalent to constant (downward) acceleration
+        float relPos = dt * dt;     // relPos is between 0 and 0.25
 
         // multiply with 4 to get a range from 0 to 1
         return bounceComp.maxHeight * (1 - relPos * 4f);

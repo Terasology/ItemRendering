@@ -27,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import org.terasology.itemRendering.components.AnimateBounceComponent;
+import org.terasology.itemRendering.components.AnimateWobbleComponent;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.math.geom.Vector3f;
 
@@ -55,7 +56,9 @@ public final class VisualBounceTest {
             private float time = 0;
 
             private AnimateBounceComponent bounceComp = new AnimateBounceComponent();
-            private LocationComponent locComp = new LocationComponent(new Vector3f(0, 10, 0));
+            private AnimateWobbleComponent wobbleComp = new AnimateWobbleComponent();
+            private LocationComponent loc1Comp = new LocationComponent(new Vector3f(0, 10, 0));
+            private LocationComponent loc2Comp = new LocationComponent(new Vector3f(0, 20, 0));
 
             @Override
             protected void paintComponent(final Graphics g1) {
@@ -79,7 +82,8 @@ public final class VisualBounceTest {
                 g.setStroke(new BasicStroke(1f));
                 g.setColor(Color.BLACK);
 
-                render(g, bounceComp, locComp, time);
+                renderBounce(g, bounceComp, loc1Comp, time);
+                renderWobble(g, wobbleComp, loc2Comp, time);
 
                 time += 0.2f;
             }
@@ -94,7 +98,7 @@ public final class VisualBounceTest {
         frame.setVisible(true);
     }
 
-    private static void render(Graphics2D g, AnimateBounceComponent comp, LocationComponent loc, float time) {
+    private static void renderBounce(Graphics2D g, AnimateBounceComponent comp, LocationComponent loc, float time) {
 
         float modTime = time / comp.period;
         float dt = modTime % 1f;
@@ -103,6 +107,15 @@ public final class VisualBounceTest {
         }
         float relPos = dt * dt;
         float pos = loc.getWorldPosition().y() + comp.maxHeight * relPos * 4f;
+
+        float x = (time) % 60;
+        g.draw(new Line2D.Float(x, pos, x, pos));
+    }
+
+    private static void renderWobble(Graphics2D g, AnimateWobbleComponent comp, LocationComponent loc, float time) {
+
+        float relPos = (float) -Math.cos(time * Math.PI * 2f / comp.period) * 0.5f + 0.5f;
+        float pos = loc.getWorldPosition().y() + comp.maxHeight * relPos;
 
         float x = (time) % 60;
         g.draw(new Line2D.Float(x, pos, x, pos));
