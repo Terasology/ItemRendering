@@ -15,14 +15,11 @@
  */
 package org.terasology;
 
-import org.terasology.math.Direction;
-import org.terasology.math.Pitch;
-import org.terasology.math.Rotation;
-import org.terasology.math.Side;
-import org.terasology.math.Yaw;
+import org.terasology.math.*;
 import org.terasology.math.geom.Vector3f;
+import org.terasology.math.geom.Vector3i;
 
-public class RotationUtils {
+public abstract class RotationUtils {
 
     public static Vector3f rotateVector3f(Vector3f input, Direction direction) {
         switch (direction) {
@@ -35,9 +32,26 @@ public class RotationUtils {
             case RIGHT:
                 return new Vector3f(input.z * -1, input.y, input.x);
             case UP:
-                return new Vector3f(input.x, input.z, input.z * -1);
+                return new Vector3f(input.x, input.z, input.y * -1);
             default:
                 return new Vector3f(input.x, input.y, input.z);
+        }
+    }
+
+    public static Vector3i rotateVector3i(Direction direction, Vector3i input) {
+        switch (direction) {
+            case BACKWARD:
+                return new Vector3i(input.x, input.y, input.z * -1);
+            case DOWN:
+                return new Vector3i(input.x, input.z * -1, input.y);
+            case LEFT:
+                return new Vector3i(input.z, input.y, input.x);
+            case RIGHT:
+                return new Vector3i(input.z * -1, input.y, input.x);
+            case UP:
+                return new Vector3i(input.x, input.z, input.y * -1);
+            default:
+                return new Vector3i(input.x, input.y, input.z);
         }
     }
 
