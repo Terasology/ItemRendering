@@ -4,5 +4,10 @@
     "author" : "Josharias",
     "displayName" : "ItemRendering",
     "description" : "",
-    "dependencies" : []
+    "dependencies" : [
+         {
+             "id" : "Core",
+             "minVersion" : "1.0.0"
+         }
+     ]
 }
