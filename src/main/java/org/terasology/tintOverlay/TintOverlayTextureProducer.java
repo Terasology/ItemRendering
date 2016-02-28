@@ -15,7 +15,7 @@
  */
 package org.terasology.tintOverlay;
 
-import org.terasology.asset.Assets;
+import org.terasology.utilities.Assets;
 import org.terasology.assets.AssetDataProducer;
 import org.terasology.assets.ResourceUrn;
 import org.terasology.assets.module.annotations.RegisterAssetDataProducer;
