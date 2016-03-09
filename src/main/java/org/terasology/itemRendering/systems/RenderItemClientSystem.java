@@ -15,7 +15,6 @@
  */
 package org.terasology.itemRendering.systems;
 
-import org.terasology.utilities.Assets;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
@@ -35,6 +34,7 @@ import org.terasology.registry.In;
 import org.terasology.rendering.iconmesh.IconMeshFactory;
 import org.terasology.rendering.logic.LightComponent;
 import org.terasology.rendering.logic.MeshComponent;
+import org.terasology.utilities.Assets;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.WorldProvider;
@@ -69,14 +69,13 @@ public class RenderItemClientSystem extends BaseComponentSystem {
     }
 
     private void updateLocation(EntityRef entity, RenderItemComponent itemDisplay, LocationComponent location) {
-        location.setLocalScale(itemDisplay.size);
         Rotation rotation = Rotation.rotate(itemDisplay.yaw, itemDisplay.pitch, itemDisplay.roll);
         if (entity.hasComponent(LocationComponent.class)) {
             entity.saveComponent(location);
         } else {
             entity.addComponent(location);
         }
-        Location.attachChild(entity.getOwner(), entity, itemDisplay.translate, rotation.getQuat4f());
+        Location.attachChild(entity.getOwner(), entity, itemDisplay.translate, rotation.getQuat4f(), itemDisplay.size);
     }
 
     @ReceiveEvent
