@@ -25,22 +25,15 @@ import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.itemRendering.components.CustomRenderedItemMeshComponent;
 import org.terasology.itemRendering.components.RenderItemComponent;
-import org.terasology.logic.inventory.ItemComponent;
 import org.terasology.logic.location.Location;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.math.Rotation;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
-import org.terasology.rendering.iconmesh.IconMeshFactory;
-import org.terasology.rendering.logic.LightComponent;
 import org.terasology.rendering.logic.MeshComponent;
-import org.terasology.utilities.Assets;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.WorldProvider;
 import org.terasology.world.block.BlockComponent;
-import org.terasology.world.block.family.BlockFamily;
-import org.terasology.world.block.items.BlockItemComponent;
 
 /**
  * This will add a location and mesh to an entity in the world for any entities that get a RenderItemComponent, causing them to be rendered in the world.
@@ -93,10 +86,6 @@ public class RenderItemClientSystem extends BaseComponentSystem {
             if (!entity.hasComponent(MeshComponent.class)) {
                 if (entity.hasComponent(CustomRenderedItemMeshComponent.class)) {
                     addCustomItemRendering(entity);
-                } else if (entity.hasComponent(BlockItemComponent.class)) {
-                    addBlockRendering(entity);
-                } else {
-                    addItemRendering(entity);
                 }
             }
 
@@ -112,46 +101,9 @@ public class RenderItemClientSystem extends BaseComponentSystem {
         entity.addComponent(meshComponent);
     }
 
-
-    private void addItemRendering(EntityRef entityRef) {
-        ItemComponent itemComponent = entityRef.getComponent(ItemComponent.class);
-        if (itemComponent != null) {
-            MeshComponent meshComponent = new MeshComponent();
-            meshComponent.material = Assets.getMaterial("engine:droppedItem").get();
-            if (itemComponent.icon != null) {
-                meshComponent.mesh = IconMeshFactory.getIconMesh(itemComponent.icon);
-            }
-            entityRef.addComponent(meshComponent);
-        }
-    }
-
-    private void addBlockRendering(EntityRef entityRef) {
-        MeshComponent mesh = new MeshComponent();
-        BlockItemComponent blockItemComponent = entityRef.getComponent(BlockItemComponent.class);
-        BlockFamily blockFamily = blockItemComponent.blockFamily;
-
-        if (blockFamily == null) {
-            return;
-        }
-
-        mesh.mesh = blockFamily.getArchetypeBlock().getMesh();
-        mesh.material = Assets.getMaterial("engine:terrain").get();
-
-        if (blockFamily.getArchetypeBlock().getLuminance() > 0 && !entityRef.hasComponent(LightComponent.class)) {
-            LightComponent lightComponent = entityRef.addComponent(new LightComponent());
-
-            Vector3f randColor = new Vector3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-            lightComponent.lightColorDiffuse.set(randColor);
-            lightComponent.lightColorAmbient.set(randColor);
-        }
-
-        entityRef.addComponent(mesh);
-    }
-
     @ReceiveEvent
     public void onRemoveItemDisplay(BeforeDeactivateComponent event, EntityRef entity, RenderItemComponent itemDisplay) {
         Location.removeChild(entity.getOwner(), entity);
         entity.removeComponent(LocationComponent.class);
-        entity.removeComponent(MeshComponent.class);
     }
 }
