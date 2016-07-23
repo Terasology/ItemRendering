@@ -25,4 +25,12 @@ import org.terasology.rendering.assets.mesh.Mesh;
 public class CustomRenderedItemMeshComponent implements Component {
     public Mesh mesh;
     public Material material;
+
+    public CustomRenderedItemMeshComponent() {
+    }
+
+    public CustomRenderedItemMeshComponent(Mesh mesh, Material material) {
+        this.mesh = mesh;
+        this.material = material;
+    }
 }
