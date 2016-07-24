@@ -27,8 +27,32 @@ public class AnimatedMovingItemComponent implements Component {
     public Side entranceSide;
     @Replicate
     public Side exitSide;
-    @Replicate
-    public long arrivalTime;
+
+    /**
+     * The point in time the item starts moving (in game time)
+     */
     @Replicate
     public long startTime;
+
+    /**
+     * The point in time the item reaches the exit side (in game time)
+     */
+    @Replicate
+    public long arrivalTime;
+
+    public AnimatedMovingItemComponent() {
+    }
+
+    /**
+     * @param entranceSide the block side the item enters
+     * @param exitSide     the block side the item exits
+     * @param startTime    the point in time the item starts moving (in game time)
+     * @param arrivalTime  the point in time the item reaches the exit side (in game time)
+     */
+    public AnimatedMovingItemComponent(Side entranceSide, Side exitSide, long startTime, long arrivalTime) {
+        this.entranceSide = entranceSide;
+        this.exitSide = exitSide;
+        this.startTime = startTime;
+        this.arrivalTime = arrivalTime;
+    }
 }

@@ -32,4 +32,12 @@ public class AnimateBounceComponent implements Component {
      * The max. height of a bounce in blocks.
      */
     public float maxHeight = 1f;
+
+    public AnimateBounceComponent() {
+    }
+
+    public AnimateBounceComponent(float period, float maxHeight) {
+        this.period = period;
+        this.maxHeight = maxHeight;
+    }
 }

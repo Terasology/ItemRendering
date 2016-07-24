@@ -16,13 +16,80 @@
 package org.terasology.itemRendering.components;
 
 import org.terasology.entitySystem.Component;
+import org.terasology.math.geom.Vector3f;
 
 /**
- * Add this to an entity that will continuously rotate.  Speed is in rotations per second.
+ * Add this to an entity that will continuously rotate.
+ * <p>
+ * Speed is in rotations per second.
  */
 public class AnimateRotationComponent implements Component {
-    public float yawSpeed = 0f;
-    public float pitchSpeed = 0f;
-    public float rollSpeed = 0f;
+    public float yawSpeed;
+    public float pitchSpeed;
+    public float rollSpeed;
+
+    /**
+     * Synchronize rotation components with each other, so that everything rotating at the same speed will rotate synchronously.
+     */
     public boolean isSynchronized;
+
+    public AnimateRotationComponent() {
+    }
+
+    public AnimateRotationComponent(float yawSpeed, float pitchSpeed, float rollSpeed) {
+        this.yawSpeed = yawSpeed;
+        this.pitchSpeed = pitchSpeed;
+        this.rollSpeed = rollSpeed;
+    }
+
+    public AnimateRotationComponent(float yawSpeed, float pitchSpeed, float rollSpeed, boolean isSynchronized) {
+        this.yawSpeed = yawSpeed;
+        this.pitchSpeed = pitchSpeed;
+        this.rollSpeed = rollSpeed;
+        this.isSynchronized = isSynchronized;
+    }
+
+    /**
+     * Creates a new {@link AnimateRotationComponent} from a rotation vector.
+     *
+     * @param rotation the rotation speed values as (yaw, pitch, roll)
+     */
+    public AnimateRotationComponent(Vector3f rotation) {
+        this.yawSpeed = rotation.x;
+        this.pitchSpeed = rotation.y;
+        this.rollSpeed = rotation.z;
+    }
+
+    /**
+     * Creates a new {@link AnimateRotationComponent} from a rotation vector.
+     *
+     * @param rotation       the rotation speed values as (yaw, pitch, roll)
+     * @param isSynchronized synchronize rotations of same speed
+     */
+    public AnimateRotationComponent(Vector3f rotation, boolean isSynchronized) {
+        this.yawSpeed = rotation.x;
+        this.pitchSpeed = rotation.y;
+        this.rollSpeed = rotation.z;
+        this.isSynchronized = isSynchronized;
+    }
+
+    /**
+     * The rotation speeds as vector denoting (yaw, pitch, roll)
+     *
+     * @return vector with rotation speeds for (yaw, pitch, roll)
+     */
+    public Vector3f getRotation() {
+        return new Vector3f(yawSpeed, pitchSpeed, rollSpeed);
+    }
+
+    /**
+     * Set the rotation speeds for (yaw, pitch, roll)
+     *
+     * @param rotation the new rotation speeds given as (yaw, pitch, roll)
+     */
+    public void setRotation(Vector3f rotation) {
+        this.yawSpeed = rotation.x;
+        this.pitchSpeed = rotation.y;
+        this.rollSpeed = rotation.z;
+    }
 }
