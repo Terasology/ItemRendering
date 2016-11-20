@@ -1,6 +1,6 @@
 {
     "id" : "ItemRendering",
-    "version" : "0.2.1-SNAPSHOT",
+    "version" : "1.0.0-SNAPSHOT",
     "author" : "Josharias",
     "displayName" : "ItemRendering",
     "description" : "",
