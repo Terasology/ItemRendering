@@ -1,7 +1,7 @@
 {
     "id" : "ItemRendering",
     "version" : "1.0.0-SNAPSHOT",
-    "author" : "Josharias",
+    "author" : "Josharias, msteiger, Cervator, skaldarnar",
     "displayName" : "ItemRendering",
     "description" : "A library for displaying "holographic" items (i.e. spinning items when dropped on the floor) in Terasology",
     "dependencies" : [
