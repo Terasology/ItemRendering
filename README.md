@@ -1,12 +1,12 @@
-#RenderItemComponent
+# RenderItemComponent
 
 Add this to entities and they will display in the world.  This rendered version's location becomes a child of the owning entity (like the containing inventory). 
 
-#CustomRenderedItemMeshComponent
+# CustomRenderedItemMeshComponent
 
 When the entity gets an RenderItemComponent added, it will use this mesh and material instead of the default block or item.
 
-##Minimal Usage on a prefab
+## Minimal Usage on a prefab
 
 ```java
 {
@@ -18,11 +18,11 @@ When the entity gets an RenderItemComponent added, it will use this mesh and mat
 ```
 
 
-#AnimateRotationComponent
+# AnimateRotationComponent
 
 When the entity gets a AnimateRotationComponent added, it will rotate continuously.
 
-##Minimal Usage on a prefab
+## Minimal Usage on a prefab
 
 ```java
 {
@@ -32,7 +32,7 @@ When the entity gets a AnimateRotationComponent added, it will rotate continuous
 }
 ```
 
-##Defaults
+## Defaults
 
 ```java
 {
@@ -45,11 +45,11 @@ When the entity gets a AnimateRotationComponent added, it will rotate continuous
 }
 ```
 
-#AnimateBounceComponent
+# AnimateBounceComponent
 
 When the entity gets a AnimateBounceComponent added, it will bounce continuously.
 
-##Minimal Usage on a prefab
+## Minimal Usage on a prefab
 
 ```json
 {
