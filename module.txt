@@ -1,13 +1,10 @@
 {
     "id" : "ItemRendering",
-    "version" : "1.0.0-SNAPSHOT",
+    "version" : "1.0.1-SNAPSHOT",
     "author" : "Josharias",
     "displayName" : "ItemRendering",
     "description" : "",
     "dependencies" : [
-         {
-             "id" : "Core",
-             "minVersion" : "1.0.0"
-         }
-     ]
+        {"id" : "Core", "minVersion" : "2.0.0"}
+    ]
 }
