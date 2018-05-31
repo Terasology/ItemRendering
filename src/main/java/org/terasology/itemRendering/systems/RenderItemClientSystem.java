@@ -83,10 +83,8 @@ public class RenderItemClientSystem extends BaseComponentSystem {
         }
 
         if (locationComponent != null) {
-            if (!entity.hasComponent(MeshComponent.class)) {
-                if (entity.hasComponent(CustomRenderedItemMeshComponent.class)) {
-                    addCustomItemRendering(entity);
-                }
+            if (entity.hasComponent(CustomRenderedItemMeshComponent.class)) {
+                addCustomItemRendering(entity);
             }
 
             updateLocation(entity, itemDisplay, new LocationComponent());
@@ -98,7 +96,7 @@ public class RenderItemClientSystem extends BaseComponentSystem {
         MeshComponent meshComponent = new MeshComponent();
         meshComponent.mesh = customRenderedItemMeshComponent.mesh;
         meshComponent.material = customRenderedItemMeshComponent.material;
-        entity.addComponent(meshComponent);
+        entity.addOrSaveComponent(meshComponent);
     }
 
     @ReceiveEvent
