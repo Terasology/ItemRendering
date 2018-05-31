@@ -6,5 +6,6 @@
     "description" : "",
     "dependencies" : [
         {"id" : "Core", "minVersion" : "2.0.0"}
-    ]
+    ],
+    "isLibrary": true
 }
