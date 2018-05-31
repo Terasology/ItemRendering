@@ -18,6 +18,7 @@ package org.terasology.itemRendering.components;
 import com.google.common.collect.Lists;
 import org.terasology.entitySystem.Component;
 import org.terasology.itemRendering.systems.RenderOwnedEntityDetails;
+import org.terasology.network.Replicate;
 
 import java.util.List;
 
@@ -26,5 +27,6 @@ import java.util.List;
  * Also add the RenderItemComponent to adjust the location of the item,  otherwise it will be in the center of the containing block.
  */
 public class RenderInventorySlotsComponent extends RenderOwnedEntityDetails implements Component {
+    @Replicate
     public List<Integer> slots = Lists.newArrayList();
 }

@@ -17,6 +17,7 @@ package org.terasology.itemRendering.components;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.math.geom.Vector3f;
+import org.terasology.network.Replicate;
 
 /**
  * Add this to an entity that will continuously rotate.
@@ -24,13 +25,17 @@ import org.terasology.math.geom.Vector3f;
  * Speed is in rotations per second.
  */
 public class AnimateRotationComponent implements Component {
+    @Replicate
     public float yawSpeed;
+    @Replicate
     public float pitchSpeed;
+    @Replicate
     public float rollSpeed;
 
     /**
      * Synchronize rotation components with each other, so that everything rotating at the same speed will rotate synchronously.
      */
+    @Replicate
     public boolean isSynchronized;
 
     public AnimateRotationComponent() {
