@@ -39,8 +39,9 @@ public class TintOverlayBlockTileProducer extends BaseTintOverlayProducer implem
 
     @Override
     public Optional<TileData> getAssetData(ResourceUrn urn) throws IOException {
-        BufferedImage resultImage = createImage(urn);
-        if (resultImage != null) {
+        BufferedImage[] resultImage = new BufferedImage[1];
+        resultImage[0] = createImage(urn);
+        if (resultImage[0] != null) {
             return Optional.of(new TileData(resultImage, false));
         }
 
@@ -52,7 +53,7 @@ public class TintOverlayBlockTileProducer extends BaseTintOverlayProducer implem
         // attempt to get an existing block tile
         Optional<BlockTile> resourceBlockTile = Assets.get(resourceUri, BlockTile.class);
         if (resourceBlockTile.isPresent()) {
-            return resourceBlockTile.get().getImage();
+            return resourceBlockTile.get().getImage(0);
         }
 
         // try and get it as a normal texture
