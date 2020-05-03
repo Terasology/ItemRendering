@@ -4,6 +4,8 @@
     "author" : "Josharias",
     "displayName" : "ItemRendering",
     "description" : "",
-    "dependencies" : [],
+    "dependencies" : [
+        {"id" : "Inventory", "minVersion" : "1.1.0"}
+    ],
     "isLibrary": true   
 }
