@@ -1,11 +1,11 @@
 {
-    "id" : "ItemRendering",
-    "version" : "1.1.0",
-    "author" : "Josharias",
-    "displayName" : "ItemRendering",
-    "description" : "",
-    "dependencies" : [
-        {"id" : "Inventory", "minVersion" : "1.1.0"}
+    "id": "ItemRendering",
+    "version": "1.1.0",
+    "author": "Josharias",
+    "displayName": "ItemRendering",
+    "description": "This library module allows to render and animate items when thrown into the world.",
+    "dependencies": [
+        { "id": "Inventory", "minVersion": "1.1.0" }
     ],
-    "isLibrary": true   
+    "isLibrary": true
 }
