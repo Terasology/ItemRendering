@@ -18,11 +18,11 @@ package org.terasology.tintOverlay;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import org.terasology.utilities.Assets;
-import org.terasology.assets.ResourceUrn;
 import org.terasology.entitySystem.Component;
+import org.terasology.gestalt.assets.ResourceUrn;
 import org.terasology.reflection.MappedContainer;
 import org.terasology.rendering.assets.texture.Texture;
+import org.terasology.utilities.Assets;
 
 import java.util.Map;
 import java.util.Set;
