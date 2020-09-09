@@ -1,35 +1,22 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.tintOverlay;
 
+import org.terasology.engine.rendering.assets.texture.TextureRegionAsset;
+import org.terasology.engine.rendering.assets.texture.TextureUtil;
+import org.terasology.engine.utilities.Assets;
+import org.terasology.engine.world.block.tiles.BlockTile;
+import org.terasology.engine.world.block.tiles.TileData;
 import org.terasology.gestalt.assets.AssetDataProducer;
 import org.terasology.gestalt.assets.ResourceUrn;
-import org.terasology.rendering.assets.texture.TextureRegionAsset;
-import org.terasology.rendering.assets.texture.TextureUtil;
-import org.terasology.utilities.Assets;
-import org.terasology.world.block.tiles.BlockTile;
-import org.terasology.world.block.tiles.TileData;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Optional;
 
 /**
- * Layers images on top of each other. Tinting, brightning, saturating, and shifting.
- * Uses a goofy uri syntax to carry all the parameters.
+ * Layers images on top of each other. Tinting, brightning, saturating, and shifting. Uses a goofy uri syntax to carry
+ * all the parameters.
  * <p>
  * Warning: this does not yet work because: TileData does not yet have @API, runtime generated TileData assets do not
  * get added to the blocktile texture.

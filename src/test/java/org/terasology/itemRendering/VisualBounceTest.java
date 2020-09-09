@@ -1,39 +1,24 @@
-/*
- * Copyright 2014 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 
 package org.terasology.itemRendering;
 
+import org.terasology.engine.logic.location.LocationComponent;
+import org.terasology.itemRendering.components.AnimateBounceComponent;
+import org.terasology.itemRendering.components.AnimateWobbleComponent;
+import org.terasology.math.geom.Vector3f;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.Timer;
-
-import org.terasology.itemRendering.components.AnimateBounceComponent;
-import org.terasology.itemRendering.components.AnimateWobbleComponent;
-import org.terasology.logic.location.LocationComponent;
-import org.terasology.math.geom.Vector3f;
-
 /**
- * A visual test for animated movement.
- * Use the main method to start.
+ * A visual test for animated movement. Use the main method to start.
  */
 public final class VisualBounceTest {
 
@@ -52,13 +37,11 @@ public final class VisualBounceTest {
 
         JComponent comp = new JComponent() {
             private static final long serialVersionUID = -3019274194814342555L;
-
+            private final AnimateBounceComponent bounceComp = new AnimateBounceComponent();
+            private final AnimateWobbleComponent wobbleComp = new AnimateWobbleComponent();
+            private final LocationComponent loc1Comp = new LocationComponent(new Vector3f(0, 10, 0));
+            private final LocationComponent loc2Comp = new LocationComponent(new Vector3f(0, 20, 0));
             private float time = 0;
-
-            private AnimateBounceComponent bounceComp = new AnimateBounceComponent();
-            private AnimateWobbleComponent wobbleComp = new AnimateWobbleComponent();
-            private LocationComponent loc1Comp = new LocationComponent(new Vector3f(0, 10, 0));
-            private LocationComponent loc2Comp = new LocationComponent(new Vector3f(0, 20, 0));
 
             @Override
             protected void paintComponent(final Graphics g1) {
@@ -71,10 +54,10 @@ public final class VisualBounceTest {
                 g.translate(-0.5, -0.5);
                 g.setStroke(new BasicStroke(0f));
                 g.setColor(Color.LIGHT_GRAY);
-                for (int i = 0; i < getWidth() / scale + 1; i+=10) {
+                for (int i = 0; i < getWidth() / scale + 1; i += 10) {
                     g.drawLine(i, 0, i, getHeight());
                 }
-                for (int i = 0; i < getHeight() / scale + 1; i+=10) {
+                for (int i = 0; i < getHeight() / scale + 1; i += 10) {
                     g.drawLine(0, i, getWidth(), i);
                 }
 
@@ -91,7 +74,7 @@ public final class VisualBounceTest {
 
         frame.add(comp);
 
-        Timer t = new Timer(40, event ->  comp.repaint());
+        Timer t = new Timer(40, event -> comp.repaint());
         t.start();
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);

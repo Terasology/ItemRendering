@@ -1,42 +1,30 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.itemRendering.systems;
 
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
-import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
-import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
+import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
+import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnChangedComponent;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.logic.location.Location;
+import org.terasology.engine.logic.location.LocationComponent;
+import org.terasology.engine.math.Rotation;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.rendering.logic.MeshComponent;
+import org.terasology.engine.utilities.random.FastRandom;
+import org.terasology.engine.utilities.random.Random;
+import org.terasology.engine.world.WorldProvider;
+import org.terasology.engine.world.block.BlockComponent;
 import org.terasology.itemRendering.components.CustomRenderedItemMeshComponent;
 import org.terasology.itemRendering.components.RenderItemComponent;
-import org.terasology.logic.location.Location;
-import org.terasology.logic.location.LocationComponent;
-import org.terasology.math.Rotation;
-import org.terasology.registry.In;
-import org.terasology.rendering.logic.MeshComponent;
-import org.terasology.utilities.random.FastRandom;
-import org.terasology.utilities.random.Random;
-import org.terasology.world.WorldProvider;
-import org.terasology.world.block.BlockComponent;
 
 /**
- * This will add a location and mesh to an entity in the world for any entities that get a RenderItemComponent, causing them to be rendered in the world.
+ * This will add a location and mesh to an entity in the world for any entities that get a RenderItemComponent, causing
+ * them to be rendered in the world.
  * <p/>
  * The location is a relative location based on the entity's owner.
  */
@@ -92,7 +80,8 @@ public class RenderItemClientSystem extends BaseComponentSystem {
     }
 
     private void addCustomItemRendering(EntityRef entity) {
-        CustomRenderedItemMeshComponent customRenderedItemMeshComponent = entity.getComponent(CustomRenderedItemMeshComponent.class);
+        CustomRenderedItemMeshComponent customRenderedItemMeshComponent =
+                entity.getComponent(CustomRenderedItemMeshComponent.class);
         MeshComponent meshComponent = new MeshComponent();
         meshComponent.mesh = customRenderedItemMeshComponent.mesh;
         meshComponent.material = customRenderedItemMeshComponent.material;
@@ -100,7 +89,8 @@ public class RenderItemClientSystem extends BaseComponentSystem {
     }
 
     @ReceiveEvent
-    public void onRemoveItemDisplay(BeforeDeactivateComponent event, EntityRef entity, RenderItemComponent itemDisplay) {
+    public void onRemoveItemDisplay(BeforeDeactivateComponent event, EntityRef entity,
+                                    RenderItemComponent itemDisplay) {
         Location.removeChild(entity.getOwner(), entity);
         entity.removeComponent(LocationComponent.class);
     }

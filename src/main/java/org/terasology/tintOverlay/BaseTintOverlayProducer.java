@@ -1,18 +1,5 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.tintOverlay;
 
 import com.google.common.base.Joiner;
@@ -31,8 +18,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Layers images on top of each other. Tinting, brightning, saturating, and shifting.
- * Uses a goofy uri syntax to carry all the parameters.
+ * Layers images on top of each other. Tinting, brightning, saturating, and shifting. Uses a goofy uri syntax to carry
+ * all the parameters.
  */
 public abstract class BaseTintOverlayProducer {
     private static final Name MODULENAME = new Name("ItemRendering");
@@ -91,7 +78,8 @@ public abstract class BaseTintOverlayProducer {
 
                     String[] hueTextureSplit = hueTexture.split(">", 2);
                     String resourceUri = hueTextureSplit[hueTextureSplit.length - 1];
-                    TintOverlayIconComponent.TintParameter tintParameter = new TintOverlayIconComponent.TintParameter(hueTextureSplit[0]);
+                    TintOverlayIconComponent.TintParameter tintParameter =
+                            new TintOverlayIconComponent.TintParameter(hueTextureSplit[0]);
 
                     BufferedImage resourceImage = getResourceImage(resourceUri);
 
@@ -101,7 +89,8 @@ public abstract class BaseTintOverlayProducer {
                     }
 
                     if (resultImage == null) {
-                        resultImage = new BufferedImage(resourceImage.getHeight(), resourceImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
+                        resultImage = new BufferedImage(resourceImage.getHeight(), resourceImage.getWidth(),
+                                BufferedImage.TYPE_INT_ARGB);
                     }
 
                     if (resultImage.getHeight() != resourceImage.getHeight()) {
@@ -125,7 +114,9 @@ public abstract class BaseTintOverlayProducer {
                                     } else {
                                         Color.RGBtoHSB((argb >> 16) & 0xFF, (argb >> 8) & 0xFF, argb & 0xFF, hsv);
 
-                                        int resultRgb = Color.HSBtoRGB(tintParameter.getScaledHue(), hsv[1] * tintParameter.saturationScale, hsv[2] * tintParameter.brightnessScale);
+                                        int resultRgb = Color.HSBtoRGB(tintParameter.getScaledHue(),
+                                                hsv[1] * tintParameter.saturationScale,
+                                                hsv[2] * tintParameter.brightnessScale);
                                         int resultArgb = (a << 24) | (resultRgb & 0x00FFFFFF);
                                         resultImage.setRGB(targetX, targetY, resultArgb);
                                     }
