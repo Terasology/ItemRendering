@@ -3,7 +3,7 @@
 package org.terasology.itemRendering.systems;
 
 import org.terasology.math.geom.Vector3f;
-import org.terasology.reflection.MappedContainer;
+import org.terasology.nui.reflection.MappedContainer;
 
 /**
  * Add this to a block that you want items displayed from an inventory category. Also add the RenderItemComponent to

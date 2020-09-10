@@ -9,7 +9,7 @@ import org.terasology.engine.entitySystem.Component;
 import org.terasology.engine.rendering.assets.texture.Texture;
 import org.terasology.engine.utilities.Assets;
 import org.terasology.gestalt.assets.ResourceUrn;
-import org.terasology.reflection.MappedContainer;
+import org.terasology.nui.reflection.MappedContainer;
 
 import java.util.Map;
 import java.util.Set;
