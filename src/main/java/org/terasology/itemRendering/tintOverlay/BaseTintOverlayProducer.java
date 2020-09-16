@@ -1,6 +1,6 @@
 // Copyright 2020 The Terasology Foundation
 // SPDX-License-Identifier: Apache-2.0
-package org.terasology.tintOverlay;
+package org.terasology.itemRendering.tintOverlay;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
