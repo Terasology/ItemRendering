@@ -15,6 +15,7 @@
  */
 package org.terasology.itemRendering.systems;
 
+import org.joml.Quaternionf;
 import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -52,7 +53,7 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
                 float yaw = animateRotationComponent.yawSpeed != 0 ? ((gameTime / animateRotationComponent.yawSpeed) % 1f) * RADIAN_VALUE : 0;
                 float pitch = animateRotationComponent.pitchSpeed != 0 ? ((gameTime / animateRotationComponent.pitchSpeed) % 1f) * RADIAN_VALUE : 0;
                 float roll = animateRotationComponent.rollSpeed != 0 ? ((gameTime / animateRotationComponent.rollSpeed) % 1f) * RADIAN_VALUE : 0;
-                Quat4f rotationDirection = new Quat4f(yaw, pitch, roll);
+                Quaternionf rotationDirection = new Quaternionf().rotationYXZ(yaw, pitch, roll);
                 locationComponent.setLocalRotation(rotationDirection);
             } else {
                 Quat4f rotationAmount = new Quat4f(animateRotationComponent.yawSpeed * delta * RADIAN_VALUE, animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE, animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
