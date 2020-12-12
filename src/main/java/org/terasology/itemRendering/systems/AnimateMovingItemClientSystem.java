@@ -15,6 +15,7 @@
  */
 package org.terasology.itemRendering.systems;
 
+import org.joml.Vector3f;
 import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -28,7 +29,6 @@ import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimatedMovingItemComponent;
 import org.terasology.itemRendering.components.RenderItemComponent;
 import org.terasology.logic.location.LocationComponent;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 
 /**
@@ -84,11 +84,11 @@ public class AnimateMovingItemClientSystem extends BaseComponentSystem implement
         Vector3f relativePosition;
         if (percentToTarget > 0.5f) {
             // 0 - 50%
-            relativePosition = animatedMovingItemComponent.exitSide.toDirection().getVector3f();
+            relativePosition = new Vector3f(animatedMovingItemComponent.exitSide.toDirection().asVector3f());
             percentToTarget -= 0.5f;
         } else {
             // 50% - 0
-            relativePosition = animatedMovingItemComponent.entranceSide.toDirection().getVector3f();
+            relativePosition = new Vector3f(animatedMovingItemComponent.entranceSide.toDirection().asVector3f());
             percentToTarget = 0.5f - percentToTarget;
         }
 

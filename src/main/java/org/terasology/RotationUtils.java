@@ -15,9 +15,14 @@
  */
 package org.terasology;
 
-import org.terasology.math.*;
-import org.terasology.math.geom.Vector3f;
-import org.terasology.math.geom.Vector3i;
+
+import org.joml.Vector3f;
+import org.joml.Vector3i;
+import org.terasology.math.Direction;
+import org.terasology.math.Pitch;
+import org.terasology.math.Rotation;
+import org.terasology.math.Side;
+import org.terasology.math.Yaw;
 
 public abstract class RotationUtils {
 

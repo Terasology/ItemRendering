@@ -15,6 +15,7 @@
  */
 package org.terasology.itemRendering.systems;
 
+import org.joml.Quaternionf;
 import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -24,7 +25,7 @@ import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimateRotationComponent;
 import org.terasology.logic.location.LocationComponent;
-import org.terasology.math.geom.Quat4f;
+import org.terasology.math.JomlUtil;
 import org.terasology.registry.In;
 
 /**
@@ -52,11 +53,11 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
                 float yaw = animateRotationComponent.yawSpeed != 0 ? ((gameTime / animateRotationComponent.yawSpeed) % 1f) * RADIAN_VALUE : 0;
                 float pitch = animateRotationComponent.pitchSpeed != 0 ? ((gameTime / animateRotationComponent.pitchSpeed) % 1f) * RADIAN_VALUE : 0;
                 float roll = animateRotationComponent.rollSpeed != 0 ? ((gameTime / animateRotationComponent.rollSpeed) % 1f) * RADIAN_VALUE : 0;
-                Quat4f rotationDirection = new Quat4f(yaw, pitch, roll);
+                Quaternionf rotationDirection = new Quaternionf().rotationYXZ(yaw, pitch, roll);
                 locationComponent.setLocalRotation(rotationDirection);
             } else {
-                Quat4f rotationAmount = new Quat4f(animateRotationComponent.yawSpeed * delta * RADIAN_VALUE, animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE, animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
-                Quat4f currentRotation = locationComponent.getLocalRotation();
+                Quaternionf rotationAmount = new Quaternionf().rotationYXZ(animateRotationComponent.yawSpeed * delta * RADIAN_VALUE, animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE, animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
+                Quaternionf currentRotation = JomlUtil.from(locationComponent.getLocalRotation());
                 currentRotation.mul(rotationAmount);
                 currentRotation.normalize();
                 locationComponent.setLocalRotation(currentRotation);
