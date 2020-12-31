@@ -68,7 +68,7 @@ public class RenderItemClientSystem extends BaseComponentSystem {
         } else {
             entity.addComponent(location);
         }
-        Location.attachChild(entity.getOwner(), entity, itemDisplay.translate, rotation.getQuat4f(), itemDisplay.size);
+        Location.attachChild(entity.getOwner(), entity, itemDisplay.translate, rotation.orientation(), itemDisplay.size);
     }
 
     @ReceiveEvent
