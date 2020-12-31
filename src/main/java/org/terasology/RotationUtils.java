@@ -15,12 +15,23 @@
  */
 package org.terasology;
 
+import org.joml.Vector3fc;
+import org.joml.Vector3ic;
 import org.terasology.math.*;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.math.geom.Vector3i;
 
 public abstract class RotationUtils {
 
+    /**
+     *
+     * @param input
+     * @param direction
+     * @return
+     * @deprecated This is scheduled for removal in an upcoming version method will be replaced with JOML implementation
+     *          {@link #rotateVector3f(Vector3fc,Direction)}.
+     */
+    @Deprecated
     public static Vector3f rotateVector3f(Vector3f input, Direction direction) {
         switch (direction) {
             case BACKWARD:
@@ -38,6 +49,32 @@ public abstract class RotationUtils {
         }
     }
 
+    public static org.joml.Vector3f rotateVector3f(Vector3fc input, Direction direction) {
+        switch (direction) {
+            case BACKWARD:
+                return new org.joml.Vector3f(input.x(), input.y(), input.z() * -1);
+            case DOWN:
+                return new org.joml.Vector3f(input.x(), input.z() * -1, input.y());
+            case LEFT:
+                return new org.joml.Vector3f(input.z(), input.y(), input.x());
+            case RIGHT:
+                return new org.joml.Vector3f(input.z() * -1, input.y(), input.x());
+            case UP:
+                return new org.joml.Vector3f(input.x(), input.z(), input.y() * -1);
+            default:
+                return new org.joml.Vector3f(input.x(), input.y(), input.z());
+        }
+    }
+
+    /**
+     *
+     * @param input
+     * @param direction
+     * @return
+     * @deprecated This is scheduled for removal in an upcoming version method will be replaced with JOML implementation
+     *          {@link #rotateVector3i(Direction,Vector3ic)}.
+     */
+    @Deprecated
     public static Vector3i rotateVector3i(Direction direction, Vector3i input) {
         switch (direction) {
             case BACKWARD:
@@ -52,6 +89,23 @@ public abstract class RotationUtils {
                 return new Vector3i(input.x, input.z, input.y * -1);
             default:
                 return new Vector3i(input.x, input.y, input.z);
+        }
+    }
+
+    public static org.joml.Vector3i rotateVector3i(Direction direction, Vector3ic input) {
+        switch (direction) {
+            case BACKWARD:
+                return new org.joml.Vector3i(input.x(), input.y(), input.z() * -1);
+            case DOWN:
+                return new org.joml.Vector3i(input.x(), input.z() * -1, input.y());
+            case LEFT:
+                return new org.joml.Vector3i(input.z(), input.y(), input.x());
+            case RIGHT:
+                return new org.joml.Vector3i(input.z() * -1, input.y(), input.x());
+            case UP:
+                return new org.joml.Vector3i(input.x(), input.z(), input.y() * -1);
+            default:
+                return new org.joml.Vector3i(input.x(), input.y(), input.z());
         }
     }
 

@@ -25,7 +25,7 @@ import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemRendering.components.AnimateRotationComponent;
 import org.terasology.logic.location.LocationComponent;
-import org.terasology.math.geom.Quat4f;
+import org.terasology.math.JomlUtil;
 import org.terasology.registry.In;
 
 /**
@@ -56,8 +56,8 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
                 Quaternionf rotationDirection = new Quaternionf().rotationYXZ(yaw, pitch, roll);
                 locationComponent.setLocalRotation(rotationDirection);
             } else {
-                Quat4f rotationAmount = new Quat4f(animateRotationComponent.yawSpeed * delta * RADIAN_VALUE, animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE, animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
-                Quat4f currentRotation = locationComponent.getLocalRotation();
+                Quaternionf rotationAmount = new Quaternionf().rotateYXZ(animateRotationComponent.yawSpeed * delta * RADIAN_VALUE, animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE, animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
+                Quaternionf currentRotation = JomlUtil.from(locationComponent.getLocalRotation());
                 currentRotation.mul(rotationAmount);
                 currentRotation.normalize();
                 locationComponent.setLocalRotation(currentRotation);

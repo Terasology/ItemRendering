@@ -15,11 +15,11 @@
  */
 package org.terasology.itemRendering.components;
 
+import org.joml.Vector3f;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.Pitch;
 import org.terasology.math.Roll;
 import org.terasology.math.Yaw;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.network.Replicate;
 
 /**

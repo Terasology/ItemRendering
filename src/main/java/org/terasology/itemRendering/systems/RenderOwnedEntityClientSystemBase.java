@@ -15,6 +15,7 @@
  */
 package org.terasology.itemRendering.systems;
 
+import org.joml.Vector3f;
 import org.terasology.RotationUtils;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
@@ -22,7 +23,6 @@ import org.terasology.itemRendering.components.RenderItemComponent;
 import org.terasology.math.Pitch;
 import org.terasology.math.Rotation;
 import org.terasology.math.Side;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
