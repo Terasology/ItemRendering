@@ -26,10 +26,10 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import org.joml.Vector3f;
 import org.terasology.itemRendering.components.AnimateBounceComponent;
 import org.terasology.itemRendering.components.AnimateWobbleComponent;
 import org.terasology.logic.location.LocationComponent;
-import org.terasology.math.geom.Vector3f;
 
 /**
  * A visual test for animated movement.
@@ -106,7 +106,7 @@ public final class VisualBounceTest {
             dt = 1f - dt;
         }
         float relPos = dt * dt;
-        float pos = loc.getWorldPosition().y() + comp.maxHeight * relPos * 4f;
+        float pos = loc.getWorldPosition(new Vector3f()).y() + comp.maxHeight * relPos * 4f;
 
         float x = (time) % 60;
         g.draw(new Line2D.Float(x, pos, x, pos));
@@ -115,7 +115,7 @@ public final class VisualBounceTest {
     private static void renderWobble(Graphics2D g, AnimateWobbleComponent comp, LocationComponent loc, float time) {
 
         float relPos = (float) -Math.cos(time * Math.PI * 2f / comp.period) * 0.5f + 0.5f;
-        float pos = loc.getWorldPosition().y() + comp.maxHeight * relPos;
+        float pos = loc.getWorldPosition(new Vector3f()).y() + comp.maxHeight * relPos;
 
         float x = (time) % 60;
         g.draw(new Line2D.Float(x, pos, x, pos));
