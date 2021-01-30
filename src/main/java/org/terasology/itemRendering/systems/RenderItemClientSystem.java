@@ -15,6 +15,8 @@
  */
 package org.terasology.itemRendering.systems;
 
+import org.joml.Vector3f;
+import org.joml.Vector3i;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
@@ -78,7 +80,7 @@ public class RenderItemClientSystem extends BaseComponentSystem {
         if (locationComponent == null && entity.getOwner().hasComponent(BlockComponent.class)) {
             // sometimes blocks lose their location component
             BlockComponent blockComponent = entity.getOwner().getComponent(BlockComponent.class);
-            locationComponent = new LocationComponent(blockComponent.getPosition().toVector3f());
+            locationComponent = new LocationComponent(new Vector3f(blockComponent.getPosition(new Vector3i())));
             entity.getOwner().addComponent(locationComponent);
         }
 
