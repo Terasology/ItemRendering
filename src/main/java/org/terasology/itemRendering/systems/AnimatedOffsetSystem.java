@@ -18,6 +18,7 @@ package org.terasology.itemRendering.systems;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joml.Vector3fc;
 import org.terasology.engine.Time;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityManager;
@@ -58,9 +59,9 @@ public abstract class AnimatedOffsetSystem<T extends Component> extends BaseComp
 
             float prevOff = offsets.getOrDefault(entity, ZERO);
             float newOff = computeOffset(bounceComp, gameTime);
-            float y = locComp.getLocalPosition().getY();
+            Vector3fc localPos = locComp.getLocalPosition();
 
-            locComp.getLocalPosition().setY(y - prevOff + newOff);
+            locComp.setLocalPosition(localPos.x(), localPos.y() - prevOff + newOff, localPos.z());
 
             offsets.put(entity, newOff);
             entity.saveComponent(locComp);

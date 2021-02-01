@@ -56,10 +56,13 @@ public class AnimateRotationClientSystem extends BaseComponentSystem implements 
                 Quaternionf rotationDirection = new Quaternionf().rotationYXZ(yaw, pitch, roll);
                 locationComponent.setLocalRotation(rotationDirection);
             } else {
-                Quaternionf rotationAmount = new Quaternionf().rotateYXZ(animateRotationComponent.yawSpeed * delta * RADIAN_VALUE, animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE, animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
-                Quaternionf currentRotation = JomlUtil.from(locationComponent.getLocalRotation());
-                currentRotation.mul(rotationAmount);
-                currentRotation.normalize();
+                Quaternionf rotationAmount =
+                        new Quaternionf().rotateYXZ(
+                                animateRotationComponent.yawSpeed * delta * RADIAN_VALUE,
+                                animateRotationComponent.pitchSpeed * delta * RADIAN_VALUE,
+                                animateRotationComponent.rollSpeed * delta * RADIAN_VALUE);
+                Quaternionf currentRotation = new Quaternionf(locationComponent.getLocalRotation());
+                currentRotation.mul(rotationAmount).normalize();
                 locationComponent.setLocalRotation(currentRotation);
             }
             entity.saveComponent(locationComponent);
