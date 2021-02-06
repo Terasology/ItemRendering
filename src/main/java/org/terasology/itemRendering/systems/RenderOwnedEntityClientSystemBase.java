@@ -1,18 +1,5 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.itemRendering.systems;
 
 import org.joml.Vector3f;
@@ -23,8 +10,6 @@ import org.terasology.itemRendering.components.RenderItemComponent;
 import org.terasology.math.Pitch;
 import org.terasology.math.Rotation;
 import org.terasology.math.Side;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.family.BlockFamily;
@@ -80,9 +65,8 @@ public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSys
 
         if (renderOwnedEntityDetails.rotateWithBlock) {
             BlockComponent blockComponent = owningEntity.getComponent(BlockComponent.class);
-            WorldProvider worldProvider = CoreRegistry.get(WorldProvider.class);
             if (blockComponent != null) {
-                Side direction = getSideDefinedDirection(blockComponent.getBlock());
+                Side direction = getSideDefinedDirection(blockComponent.block);
                 Rotation blockRotation = RotationUtils.getRotation(direction);
                 renderItem.yaw = blockRotation.getYaw();
                 renderItem.pitch = blockRotation.getPitch();
