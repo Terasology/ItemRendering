@@ -66,7 +66,7 @@ public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSys
         if (renderOwnedEntityDetails.rotateWithBlock) {
             BlockComponent blockComponent = owningEntity.getComponent(BlockComponent.class);
             if (blockComponent != null) {
-                Side direction = getSideDefinedDirection(blockComponent.block);
+                Side direction = getSideDefinedDirection(blockComponent.getBlock());
                 Rotation blockRotation = RotationUtils.getRotation(direction);
                 renderItem.yaw = blockRotation.getYaw();
                 renderItem.pitch = blockRotation.getPitch();
