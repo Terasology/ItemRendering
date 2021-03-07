@@ -15,9 +15,9 @@
  */
 package org.terasology.itemRendering.components;
 
-import org.terasology.entitySystem.Component;
-import org.terasology.math.Side;
-import org.terasology.network.Replicate;
+import org.terasology.engine.entitySystem.Component;
+import org.terasology.engine.math.Side;
+import org.terasology.engine.network.Replicate;
 
 /**
  * Add this to an entity that will move between the entrance side of a block to the exit side of a block, passing through the center of the block

@@ -16,17 +16,17 @@
 package org.terasology.itemRendering.systems;
 
 import com.google.common.collect.Lists;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
-import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
+import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnChangedComponent;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
 import org.terasology.itemRendering.components.RenderInventorySlotsComponent;
-import org.terasology.logic.inventory.InventoryComponent;
-import org.terasology.logic.inventory.InventoryManager;
-import org.terasology.registry.In;
-import org.terasology.world.WorldProvider;
+import org.terasology.engine.logic.inventory.InventoryComponent;
+import org.terasology.engine.logic.inventory.InventoryManager;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.world.WorldProvider;
 
 import java.util.List;
 

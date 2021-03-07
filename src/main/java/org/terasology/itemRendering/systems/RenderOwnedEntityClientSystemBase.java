@@ -4,17 +4,17 @@ package org.terasology.itemRendering.systems;
 
 import org.joml.Vector3f;
 import org.terasology.RotationUtils;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.math.Side;
 import org.terasology.itemRendering.components.RenderItemComponent;
-import org.terasology.math.Pitch;
-import org.terasology.math.Rotation;
-import org.terasology.math.Side;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockComponent;
-import org.terasology.world.block.family.BlockFamily;
-import org.terasology.world.block.family.SideDefinedBlockFamily;
-import org.terasology.world.block.items.BlockItemComponent;
+import org.terasology.engine.math.Pitch;
+import org.terasology.engine.math.Rotation;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockComponent;
+import org.terasology.engine.world.block.family.BlockFamily;
+import org.terasology.engine.world.block.family.SideDefinedBlockFamily;
+import org.terasology.engine.world.block.items.BlockItemComponent;
 
 public abstract class RenderOwnedEntityClientSystemBase extends BaseComponentSystem {
 

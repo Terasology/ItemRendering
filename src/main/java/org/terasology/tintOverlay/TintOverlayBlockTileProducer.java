@@ -15,13 +15,13 @@
  */
 package org.terasology.tintOverlay;
 
-import org.terasology.utilities.Assets;
+import org.terasology.engine.utilities.Assets;
 import org.terasology.assets.AssetDataProducer;
 import org.terasology.assets.ResourceUrn;
-import org.terasology.rendering.assets.texture.TextureRegionAsset;
-import org.terasology.rendering.assets.texture.TextureUtil;
-import org.terasology.world.block.tiles.BlockTile;
-import org.terasology.world.block.tiles.TileData;
+import org.terasology.engine.rendering.assets.texture.TextureRegionAsset;
+import org.terasology.engine.rendering.assets.texture.TextureUtil;
+import org.terasology.engine.world.block.tiles.BlockTile;
+import org.terasology.engine.world.block.tiles.TileData;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

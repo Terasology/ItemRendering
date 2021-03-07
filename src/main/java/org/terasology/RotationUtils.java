@@ -19,11 +19,11 @@ import org.joml.Vector3f;
 import org.joml.Vector3fc;
 import org.joml.Vector3i;
 import org.joml.Vector3ic;
-import org.terasology.math.Direction;
-import org.terasology.math.Pitch;
-import org.terasology.math.Rotation;
-import org.terasology.math.Side;
-import org.terasology.math.Yaw;
+import org.terasology.engine.math.Direction;
+import org.terasology.engine.math.Pitch;
+import org.terasology.engine.math.Rotation;
+import org.terasology.engine.math.Side;
+import org.terasology.engine.math.Yaw;
 
 public abstract class RotationUtils {
     public static Vector3f rotateVector3f(Vector3fc input, Direction direction) {

@@ -29,7 +29,7 @@ import javax.swing.Timer;
 import org.joml.Vector3f;
 import org.terasology.itemRendering.components.AnimateBounceComponent;
 import org.terasology.itemRendering.components.AnimateWobbleComponent;
-import org.terasology.logic.location.LocationComponent;
+import org.terasology.engine.logic.location.LocationComponent;
 
 /**
  * A visual test for animated movement.

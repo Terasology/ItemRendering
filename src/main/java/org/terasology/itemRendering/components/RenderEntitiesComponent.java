@@ -17,9 +17,9 @@ package org.terasology.itemRendering.components;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.terasology.entitySystem.Component;
-import org.terasology.entitySystem.Owns;
-import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.Component;
+import org.terasology.engine.entitySystem.Owns;
+import org.terasology.engine.entitySystem.entity.EntityRef;
 import org.terasology.itemRendering.systems.RenderOwnedEntityDetails;
 
 import java.util.List;

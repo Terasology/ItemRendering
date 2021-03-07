@@ -16,11 +16,11 @@
 package org.terasology.itemRendering.components;
 
 import org.joml.Vector3f;
-import org.terasology.entitySystem.Component;
-import org.terasology.math.Pitch;
-import org.terasology.math.Roll;
-import org.terasology.math.Yaw;
-import org.terasology.network.Replicate;
+import org.terasology.engine.entitySystem.Component;
+import org.terasology.engine.math.Pitch;
+import org.terasology.engine.math.Roll;
+import org.terasology.engine.math.Yaw;
+import org.terasology.engine.network.Replicate;
 
 /**
  * Add this to an entity that will be rendered in the world.  It will attach its location to its owner entity's location.

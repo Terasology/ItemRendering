@@ -15,8 +15,8 @@
  */
 package org.terasology.itemRendering.systems;
 
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
 import org.terasology.itemRendering.components.AnimateBounceComponent;
 
 /**
