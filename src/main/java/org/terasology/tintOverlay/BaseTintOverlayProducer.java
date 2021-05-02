@@ -20,8 +20,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.terasology.assets.ResourceUrn;
-import org.terasology.naming.Name;
+import org.terasology.gestalt.assets.ResourceUrn;
+import org.terasology.gestalt.naming.Name;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

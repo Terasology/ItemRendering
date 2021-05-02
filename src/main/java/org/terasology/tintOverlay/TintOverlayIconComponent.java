@@ -19,7 +19,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import org.terasology.engine.utilities.Assets;
-import org.terasology.assets.ResourceUrn;
+import org.terasology.gestalt.assets.ResourceUrn;
 import org.terasology.engine.entitySystem.Component;
 import org.terasology.reflection.MappedContainer;
 import org.terasology.engine.rendering.assets.texture.Texture;

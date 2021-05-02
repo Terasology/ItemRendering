@@ -16,8 +16,8 @@
 package org.terasology.tintOverlay;
 
 import org.terasology.engine.utilities.Assets;
-import org.terasology.assets.AssetDataProducer;
-import org.terasology.assets.ResourceUrn;
+import org.terasology.gestalt.assets.AssetDataProducer;
+import org.terasology.gestalt.assets.ResourceUrn;
 import org.terasology.engine.rendering.assets.texture.TextureRegionAsset;
 import org.terasology.engine.rendering.assets.texture.TextureUtil;
 import org.terasology.engine.world.block.tiles.BlockTile;
