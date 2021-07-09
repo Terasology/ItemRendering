@@ -1,33 +1,51 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.itemRendering.components;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.terasology.engine.entitySystem.Component;
 import org.terasology.engine.entitySystem.Owns;
 import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.gestalt.entitysystem.component.Component;
 import org.terasology.itemRendering.systems.RenderOwnedEntityDetails;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
-public class RenderEntitiesComponent extends RenderOwnedEntityDetails implements Component {
+public class RenderEntitiesComponent extends RenderOwnedEntityDetails implements Component<RenderEntitiesComponent> {
     public Map<String, RenderOwnedEntityDetails> entities = Maps.newHashMap();
 
     @Owns
     public List<EntityRef> ownedEntities = Lists.newArrayList();
+
+    @Override
+    public void copy(RenderEntitiesComponent other) {
+        this.entities.clear();
+        for (Map.Entry<String, RenderOwnedEntityDetails> entry : other.entities.entrySet()) {
+            RenderOwnedEntityDetails value = entry.getValue();
+            if (value instanceof Component && value instanceof RenderOwnedEntityDetails) {
+                Class cls = value.getClass();
+                RenderOwnedEntityDetails newValue =
+                        copyRenderOwnedEntityDetails(
+                                cls,
+                                (RenderOwnedEntityDetails & Component) value);
+                this.entities.put(entry.getKey(),
+                        newValue);
+            } else {
+                throw new RuntimeException("Cannot copy non-component RenderOwnedDetails");
+            }
+        }
+        this.ownedEntities = Lists.newArrayList(other.ownedEntities);
+    }
+
+    private <T extends RenderOwnedEntityDetails & Component<T>> RenderOwnedEntityDetails copyRenderOwnedEntityDetails(Class<T> clazz, T other) {
+        try {
+            T obj = clazz.getConstructor().newInstance();
+            obj.copy(other);
+            return obj;
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            throw new RuntimeException("Cannot create empty " + clazz.getName() + " for copying", e);
+        }
+    }
 }

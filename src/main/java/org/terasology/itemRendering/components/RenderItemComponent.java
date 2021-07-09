@@ -1,31 +1,18 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.itemRendering.components;
 
 import org.joml.Vector3f;
-import org.terasology.engine.entitySystem.Component;
 import org.terasology.engine.math.Pitch;
 import org.terasology.engine.math.Roll;
 import org.terasology.engine.math.Yaw;
 import org.terasology.engine.network.Replicate;
+import org.terasology.gestalt.entitysystem.component.Component;
 
 /**
  * Add this to an entity that will be rendered in the world.  It will attach its location to its owner entity's location.
  */
-public class RenderItemComponent implements Component {
+public class RenderItemComponent implements Component<RenderItemComponent> {
     /**
      * Translation relative to its owner entity's location.
      */
@@ -64,5 +51,14 @@ public class RenderItemComponent implements Component {
     public RenderItemComponent(Vector3f translate, float size) {
         this.translate = translate;
         this.size = size;
+    }
+
+    @Override
+    public void copy(RenderItemComponent other) {
+        this.translate = new Vector3f(other.translate);
+        this.size = other.size;
+        this.yaw = other.yaw;
+        this.pitch = other.pitch;
+        this.roll = other.roll;
     }
 }
