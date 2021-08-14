@@ -86,7 +86,7 @@ public class AnimateRotationComponent implements Component<AnimateRotationCompon
     }
 
     @Override
-    public void copy(AnimateRotationComponent other) {
+    public void copyFrom(AnimateRotationComponent other) {
         this.yawSpeed = other.yawSpeed;
         this.pitchSpeed = other.pitchSpeed;
         this.rollSpeed = other.rollSpeed;

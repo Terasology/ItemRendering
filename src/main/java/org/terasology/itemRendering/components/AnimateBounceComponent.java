@@ -32,7 +32,7 @@ public class AnimateBounceComponent implements Component<AnimateBounceComponent>
     }
 
     @Override
-    public void copy(AnimateBounceComponent other) {
+    public void copyFrom(AnimateBounceComponent other) {
         this.period = other.period;
         this.maxHeight = other.maxHeight;
     }

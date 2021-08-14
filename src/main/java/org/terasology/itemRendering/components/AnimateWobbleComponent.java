@@ -24,7 +24,7 @@ public class AnimateWobbleComponent implements Component<AnimateWobbleComponent>
     public float maxHeight = 10f;
 
     @Override
-    public void copy(AnimateWobbleComponent other) {
+    public void copyFrom(AnimateWobbleComponent other) {
         this.period = other.period;
         this.maxHeight = other.maxHeight;
     }

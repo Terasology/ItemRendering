@@ -25,7 +25,7 @@ public class CustomRenderedItemMeshComponent implements Component<CustomRendered
     }
 
     @Override
-    public void copy(CustomRenderedItemMeshComponent other) {
+    public void copyFrom(CustomRenderedItemMeshComponent other) {
         this.mesh = other.mesh;
         this.material = other.material;
     }

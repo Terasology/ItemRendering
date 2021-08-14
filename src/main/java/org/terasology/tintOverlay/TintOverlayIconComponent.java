@@ -33,7 +33,7 @@ public class TintOverlayIconComponent implements Component<TintOverlayIconCompon
     }
 
     @Override
-    public void copy(TintOverlayIconComponent other) {
+    public void copyFrom(TintOverlayIconComponent other) {
         this.texture.clear();
         for (Map.Entry<String, TintParameter> entry : other.texture.entrySet()) {
             TintParameter value = entry.getValue();

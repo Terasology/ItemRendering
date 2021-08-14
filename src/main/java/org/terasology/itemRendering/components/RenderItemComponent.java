@@ -54,7 +54,7 @@ public class RenderItemComponent implements Component<RenderItemComponent> {
     }
 
     @Override
-    public void copy(RenderItemComponent other) {
+    public void copyFrom(RenderItemComponent other) {
         this.translate = new Vector3f(other.translate);
         this.size = other.size;
         this.yaw = other.yaw;

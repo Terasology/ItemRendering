@@ -20,7 +20,7 @@ public class RenderEntitiesComponent extends RenderOwnedEntityDetails implements
     public List<EntityRef> ownedEntities = Lists.newArrayList();
 
     @Override
-    public void copy(RenderEntitiesComponent other) {
+    public void copyFrom(RenderEntitiesComponent other) {
         this.entities.clear();
         for (Map.Entry<String, RenderOwnedEntityDetails> entry : other.entities.entrySet()) {
             RenderOwnedEntityDetails value = entry.getValue();
@@ -42,7 +42,7 @@ public class RenderEntitiesComponent extends RenderOwnedEntityDetails implements
     private <T extends RenderOwnedEntityDetails & Component<T>> RenderOwnedEntityDetails copyRenderOwnedEntityDetails(Class<T> clazz, T other) {
         try {
             T obj = clazz.getConstructor().newInstance();
-            obj.copy(other);
+            obj.copyFrom(other);
             return obj;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new RuntimeException("Cannot create empty " + clazz.getName() + " for copying", e);

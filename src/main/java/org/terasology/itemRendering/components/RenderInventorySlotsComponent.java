@@ -18,7 +18,7 @@ public class RenderInventorySlotsComponent extends RenderOwnedEntityDetails impl
     public List<Integer> slots = Lists.newArrayList();
 
     @Override
-    public void copy(RenderInventorySlotsComponent other) {
+    public void copyFrom(RenderInventorySlotsComponent other) {
         this.slots = Lists.newArrayList(other.slots);
     }
 }

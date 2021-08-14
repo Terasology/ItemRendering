@@ -44,7 +44,7 @@ public class AnimatedMovingItemComponent implements Component<AnimatedMovingItem
     }
 
     @Override
-    public void copy(AnimatedMovingItemComponent other) {
+    public void copyFrom(AnimatedMovingItemComponent other) {
         this.entranceSide = other.entranceSide;
         this.exitSide = other.exitSide;
         this.startTime = other.startTime;
