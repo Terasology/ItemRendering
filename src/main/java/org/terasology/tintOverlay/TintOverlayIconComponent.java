@@ -1,28 +1,15 @@
-/*
- * Copyright 2014 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.tintOverlay;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+import org.terasology.engine.rendering.assets.texture.Texture;
 import org.terasology.engine.utilities.Assets;
 import org.terasology.gestalt.assets.ResourceUrn;
-import org.terasology.engine.entitySystem.Component;
+import org.terasology.gestalt.entitysystem.component.Component;
 import org.terasology.reflection.MappedContainer;
-import org.terasology.engine.rendering.assets.texture.Texture;
 
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +17,7 @@ import java.util.Set;
 /**
  * A map of a texture and its tint parameters (although at this point it does more than just tint).
  */
-public class TintOverlayIconComponent implements Component {
+public class TintOverlayIconComponent implements Component<TintOverlayIconComponent> {
     public Map<String, TintParameter> texture = Maps.newLinkedHashMap();
 
     public TintParameter getTintParameterForIcon(String iconUri) {
@@ -43,6 +30,23 @@ public class TintOverlayIconComponent implements Component {
         }
 
         return null;
+    }
+
+    @Override
+    public void copyFrom(TintOverlayIconComponent other) {
+        this.texture.clear();
+        for (Map.Entry<String, TintParameter> entry : other.texture.entrySet()) {
+            TintParameter value = entry.getValue();
+            TintParameter newValue = new TintParameter(
+                    value.hue,
+                    value.brightnessScale,
+                    value.saturationScale,
+                    value.shiftX,
+                    value.shiftY
+            );
+            newValue.invisible = value.invisible;
+            this.texture.put(entry.getKey(), newValue);
+        }
     }
 
     @MappedContainer
