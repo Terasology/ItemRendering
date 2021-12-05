@@ -21,21 +21,21 @@ import org.terasology.engine.entitySystem.entity.EntityRef;
 import org.terasology.engine.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
 import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
 import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnChangedComponent;
-import org.terasology.engine.entitySystem.event.ReceiveEvent;
 import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
 import org.terasology.engine.entitySystem.systems.RegisterMode;
 import org.terasology.engine.entitySystem.systems.RegisterSystem;
-import org.terasology.engine.math.Rotation;
-import org.terasology.itemRendering.components.CustomRenderedItemMeshComponent;
-import org.terasology.itemRendering.components.RenderItemComponent;
 import org.terasology.engine.logic.location.Location;
 import org.terasology.engine.logic.location.LocationComponent;
+import org.terasology.engine.math.Rotation;
 import org.terasology.engine.registry.In;
 import org.terasology.engine.rendering.logic.MeshComponent;
 import org.terasology.engine.utilities.random.FastRandom;
 import org.terasology.engine.utilities.random.Random;
 import org.terasology.engine.world.WorldProvider;
 import org.terasology.engine.world.block.BlockComponent;
+import org.terasology.gestalt.entitysystem.event.ReceiveEvent;
+import org.terasology.itemRendering.components.CustomRenderedItemMeshComponent;
+import org.terasology.itemRendering.components.RenderItemComponent;
 
 /**
  * This will add a location and mesh to an entity in the world for any entities that get a RenderItemComponent, causing them to be rendered in the world.

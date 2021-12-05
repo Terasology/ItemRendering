@@ -19,14 +19,14 @@ import com.google.common.collect.Lists;
 import org.terasology.engine.entitySystem.entity.EntityRef;
 import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
 import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnChangedComponent;
-import org.terasology.engine.entitySystem.event.ReceiveEvent;
 import org.terasology.engine.entitySystem.systems.RegisterMode;
 import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.world.WorldProvider;
+import org.terasology.gestalt.entitysystem.event.ReceiveEvent;
 import org.terasology.itemRendering.components.RenderInventorySlotsComponent;
 import org.terasology.module.inventory.components.InventoryComponent;
 import org.terasology.module.inventory.systems.InventoryManager;
-import org.terasology.engine.registry.In;
-import org.terasology.engine.world.WorldProvider;
 
 import java.util.List;
 
